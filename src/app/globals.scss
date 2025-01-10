@@ -1,0 +1,37 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import "computer-modern/index.css";
+
+@page {
+  margin: 0rem;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  margin-left: 2rem;
+  margin-right: 2rem;
+}
+
+html {
+  font-size: 14.5px;
+}
+
+@media print {
+  html {
+    font-size: 14.5px;
+  }
+
+  body {
+    @apply bg-white;
+  }
+
+  p,
+  li {
+    @apply break-inside-avoid;
+  }
+
+  .list-no-break ul>li:first-child,
+  .list-no-break ul>li:last-child {
+    @apply break-before-avoid-page;
+  }
+}

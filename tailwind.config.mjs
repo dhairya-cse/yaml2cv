@@ -7,10 +7,21 @@ export default {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        serif: ['"CMU Serif"', 'serif'],
+      },
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        navy: '#3f6eba',
+        contact: '#6f6f6f'
       },
+      width: {
+        letter: '816px'
+      },
+      height: {
+        letter: '1056px'
+      }
     },
   },
   plugins: [],
