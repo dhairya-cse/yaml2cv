@@ -10,23 +10,23 @@ export function SectionHeading({ heading }) {
     return <div className="text-lg font-bold text-navy border-b border-navy border-opacity-35 mb-0 pb-0 break-after-avoid">{heading}</div>
 }
 
-export function Section({ children, heading }) {
+export function SectionContainer({ children }) {
     return <section className="mt-1">
-        <SectionHeading heading={heading} />
         {children}
     </section>;
 }
 
-export function SubSection({ children, title, subtitle, rhsTop, rhsDown }) {
-    return <div className='mb-1'>
-        <div className="grid grid-cols-1 sm:grid-cols-[auto,auto] w-auto leading-tight break-inside-avoid-page">
-            <div className="font-bold">{title}</div>
-            <div className="sm:font-bold sm:text-right text-sm">{rhsTop}</div>
-            <div className="text-sm"><em>{subtitle}</em></div>
-            <div className="text-sm sm:text-right"><em>{rhsDown}</em></div>
-        </div>
-        {children}
-    </div>;
+export function SubSectionContainer({ children }) {
+    return <div className='mb-1'>{children}</div>
+}
+
+export function SubsectionHeader({ title, subtitle, rhsTop, rhsDown }) {
+    return <div className="grid grid-cols-1 sm:grid-cols-[auto,auto] w-auto leading-tight break-inside-avoid-page">
+        <div className="font-bold">{title}</div>
+        <div className="sm:font-bold sm:text-right text-sm">{rhsTop}</div>
+        <div className="text-sm"><em>{subtitle}</em></div>
+        <div className="text-sm sm:text-right"><em>{rhsDown}</em></div>
+    </div>
 }
 
 export function List({ children }) {
@@ -39,7 +39,7 @@ export function DoubleColumnList({ children }) {
     </ul>
 }
 
-export function ListItem({children }) {
+export function ListItem({ children }) {
     return <li className='pr-3'>{children}</li>;
 }
 

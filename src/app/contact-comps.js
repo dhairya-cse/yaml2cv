@@ -1,12 +1,47 @@
-export function ContactEntry({ color, icon, alt, text, link }) {
-    return (
-        <p>
-            <a href={link}>
-                <i className={`m-1 ${icon}`} aria-hidden="true" style={{ color }}></i>
-                <span className="text-gray-600 text-opacity-90">{text}</span>
-            </a>
-        </p>
-    );
+export function ContactEntry({ contact_type, config, value }) {
+    let icon = config.get('icon');
+    let color = config.get('color');
+    let text = config.get('text');
+    if (!icon) {
+        icon = 'fas fa-at';
+    }
+    if (!color) {
+        color = '#333333'
+    }
+    if (!text) {
+        text = getText(contact_type, value);
+    }
+
+    return <ContactEntryStyled icon={icon} link={getLink(contact_type, value)} value={text} color={color} />
+}
+
+function ContactEntryStyled({ icon, link, color, value }) {
+    return <a href={link}>
+        <i className={`m-1 ${icon}`} aria-hidden="true" style={{ color }}></i>
+        <span className="text-gray-600 text-opacity-90">{value}</span>
+    </a>
+}
+
+
+function getLink(contact_type, value) {
+    if (contact_type == 'phone') {
+        return getPhoneLink(value);
+    }
+
+    if (contact_type == 'email') {
+        return getEmailLink(value);
+    }
+
+    else return getWebLink(value);
+}
+
+function getWebLink(url) {
+    // Check if the URL starts with "http://" or "https://"
+    if (!url.startsWith("http://") && !url.startsWith("https://")) {
+        return `https://${url}`;
+    }
+
+    return url;
 }
 
 function getEmailLink(email) {
@@ -14,57 +49,22 @@ function getEmailLink(email) {
 }
 
 function getPhoneLink(phone) {
-    return `tel:${phone}`;
+    return `tel:${cleanPhoneNumber(phone)}`;
+}
+
+function cleanPhoneNumber(phone) {
+    return phone
+        .trim()
+        .replace(/[^\d+]/g, '') // Remove non-numeric characters except '+'
+        .replace(/^([^+])/, ''); // Ensure '+' is only valid at the start
+}
+
+function getText(contact_type, value) {
+    if (contact_type !== 'phone' && contact_type !== 'email') {
+        return getLinkWithoutWebPrefix(value);
+    }
 }
 
 function getLinkWithoutWebPrefix(link) {
-    return link.replace(/^https?:\/\/(www\.)?/, '');
-}
-
-function getPhoneTextFormatted(phone) {
-    return phone.replace(/(\+\d{2})(\d{4})(\d{6})/, '$1 $2 $3');
-}
-
-export function EmailContactEntry({ children, email }) {
-    return (
-        <ContactEntry
-            text={email}
-            link={getEmailLink(email)}
-            icon="fa fa-envelope"
-            color="#EA4335"
-        />
-    );
-}
-
-export function PhoneContactEntry({ children, phone }) {
-    return (
-        <ContactEntry
-            text={getPhoneTextFormatted(phone)}
-            link={getPhoneLink(phone)}
-            icon="fas fa-phone-alt"
-            color="#6e7abb"
-        />
-    );
-}
-
-export function LinkedinContactEntry({ children, linkedin }) {
-    return (
-        <ContactEntry
-            text={getLinkWithoutWebPrefix(linkedin)}
-            link={linkedin}
-            icon="fab fa-linkedin"
-            color="#0077b5"
-        />
-    );
-}
-
-export function GithubContactEntry({ children, github }) {
-    return (
-        <ContactEntry
-            text={getLinkWithoutWebPrefix(github)}
-            link={github}
-            icon="fab fa-github"
-            color="#333333"
-        />
-    );
+    return link.trim().replace(/^https?:\/\/(www\.)?/, '');
 }
