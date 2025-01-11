@@ -1,0 +1,38 @@
+config:
+  contacts:
+    phone:
+      icon: "fas fa-phone-alt"
+      color: "#6e7abb"
+    email:
+      icon: "fa fa-envelope"
+      color: "#EA4335"
+    linkedin:
+      icon: "fab fa-linkedin"
+      color: "#0077b5"
+    github:
+      icon: "fab fa-github"
+      color: "#333333"
+
+  sections:
+    experience:
+      subsection-map:
+        title: company
+        subtitle: position
+        rhsUp: duration
+        rhsDown: location
+        bullets: responsibilities
+
+    projects:
+      subsection-map:
+        title: name
+        bullets: description
+
+    education:
+      subsection-map:
+        title: institution
+        subtitle: "{{degree}}, CGPA: {{cgpa}}"
+        rhsUp: year
+        rhsDown: location
+
+    technical_skills:
+      bullets_cols: 2
