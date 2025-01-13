@@ -36,7 +36,6 @@ function getLink(contact_type, value) {
 }
 
 function getWebLink(url) {
-    // Check if the URL starts with "http://" or "https://"
     if (!url.startsWith("http://") && !url.startsWith("https://")) {
         return `https://${url}`;
     }
@@ -63,6 +62,7 @@ function getText(contact_type, value) {
     if (contact_type !== 'phone' && contact_type !== 'email') {
         return getLinkWithoutWebPrefix(value);
     }
+    return value;
 }
 
 function getLinkWithoutWebPrefix(link) {
