@@ -1,4 +1,4 @@
-import { parseMarkdown } from './pares-markdown';
+import { formatToTitleCase, parseMarkdown } from '../utils/util'
 
 export function ResumeContainer({ children }) {
     return <div className="w-dvw sm:w-letter bg-white mx-auto p-4 sm:p-8 print:p-0">
@@ -20,23 +20,17 @@ export function SubSectionContainer({ children }) {
     return <div className='mb-1'>{children}</div>
 }
 
-export function SubsectionHeader({ title, subtitle, rhsTop, rhsDown }) {
+export function SubsectionHeader({ title, subtitle, rhsTop, rhsBottom }) {
     return <div className="grid grid-cols-1 sm:grid-cols-[auto,auto] w-auto leading-tight break-inside-avoid-page">
         <div className="font-bold">{title}</div>
         <div className="sm:font-bold sm:text-right text-sm">{rhsTop}</div>
         <div className="text-sm"><em>{subtitle}</em></div>
-        <div className="text-sm sm:text-right"><em>{rhsDown}</em></div>
+        <div className="text-sm sm:text-right"><em>{rhsBottom}</em></div>
     </div>
 }
 
 export function List({ children }) {
-    return <ul className="list-disc ml-8 text-sm leading-snug">{children}</ul>;
-}
-
-export function DoubleColumnList({ children }) {
-    return <ul className='columns-2 list-disc ml-8 text-sm leading-snug'>
-        {children}
-    </ul>
+    return <ul className="list-no-break list-disc ml-8 text-sm leading-snug">{children}</ul>;
 }
 
 export function ListItem({ children }) {
@@ -51,10 +45,24 @@ export function ContactsContainer({ children }) {
     return <div className="flex justify-center gap-3 text-sm leading-tight">{children}</div>
 }
 
-export function ItemList({ items }) {
+export function ItemList({ items, columns }) {
+    if (!items) {
+        return <></>;
+    }
+
+    if (Array.isArray(items)) {
+        return <List>
+            {items.map((misc) => (
+                <ListItem>{parseMarkdown(misc)}</ListItem>
+            ))}
+        </List>
+    }
+
     return <List>
-        {items.map((misc) => (
-            <ListItem>{parseMarkdown(misc)}</ListItem>
-        ))}
+        {
+            Array.from(items.entries().map(([key, val], index) => (
+                <ListItem><span className='font-bold'>{formatToTitleCase(key)}:</span> {parseMarkdown(val)}</ListItem>
+            )))
+        }
     </List>
 }

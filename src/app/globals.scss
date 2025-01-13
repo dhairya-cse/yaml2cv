@@ -21,10 +21,6 @@ html {
     font-size: 14.5px;
   }
 
-  body {
-    @apply bg-white;
-  }
-
   p,
   li {
     @apply break-inside-avoid;

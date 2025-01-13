@@ -15,24 +15,24 @@ config:
 
   sections:
     experience:
-      subsection-map:
+      field-map:
         title: company
         subtitle: position
-        rhsUp: duration
-        rhsDown: location
+        rhsTop: duration
+        rhsBottom: location
         bullets: responsibilities
 
     projects:
-      subsection-map:
+      field-map:
         title: name
         bullets: description
 
     education:
-      subsection-map:
+      field-map:
         title: institution
         subtitle: "{{degree}}, CGPA: {{cgpa}}"
-        rhsUp: year
-        rhsDown: location
+        rhsTop: year
+        rhsBottom: location
 
     technical_skills:
       bullets_cols: 2

@@ -2,19 +2,20 @@
 import fs from 'fs';
 import path from 'path';
 import YAML from 'yaml';
-import { Resume } from './cv';
+import { Resume } from '@/components/cv';
+import { mergeMapsRecursive } from '@/utils/util';
 
 const Home = () => {
 
   let data = loadYamlToMap('cv.yaml')
   let cv = data.get('cv');
   let config = data.get('config');
-  let defaultConfig = loadYamlToMap('config.yaml');
-
-  //TODO: merge config from the yaml file to the default config
+  let defaultConfig = loadYamlToMap('config.yaml').get('config');
+  
+  config = mergeMapsRecursive(defaultConfig, config);
 
   return (
-    <Resume cv={cv} config={defaultConfig}></Resume>
+    <Resume cv={cv} config={config}></Resume>
   )
 };
 
