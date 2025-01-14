@@ -3,28 +3,39 @@
 import { yamlContentToMap, mergeMapsRecursive } from "@/utils/util";
 import { Resume } from "./cv"
 import YamlEditor from "./yaml-editor"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export function App({ cvYaml, configYaml }) {
     const [yamlContent, setYamlContent] = useState(cvYaml);
+    const [resume, setResume] = useState();
 
-    const cvData = yamlContentToMap(yamlContent);
-    const cv = cvData.get('cv');
-    let config = cvData.get('config');
-    const defaultConfig = yamlContentToMap(configYaml).get('config');
+    useEffect(() => {
+        try {
+            const cvData = yamlContentToMap(yamlContent);
+            const cv = cvData.get('cv');
+            let config = cvData.get('config');
+            const defaultConfig = yamlContentToMap(configYaml).get('config');
 
-    config = mergeMapsRecursive(defaultConfig, config);
+            config = mergeMapsRecursive(defaultConfig, config);
+            yamlContentToMap(yamlContent)
+            const resumeEvaluated = <Resume cv={cv} config={config}></Resume>
+            setResume(resumeEvaluated);
+        }
+        catch (error) {
+            console.log(error);
+        }
+    }, [yamlContent])
 
     const handleEditorChange = (value) => {
-        setYamlContent(value); // Update parent state with editor changes
+        setYamlContent(value);
     };
 
     return <div className="flex h-screen overflow-hidden print:contents">
-        <div className="flex-1 h-full overflow-y-auto pr-1 print:hidden">
+        <div className="flex-1 h-full overflow-y-auto bg-white border-r-slate-300 border-r-2 border-black print:hidden">
             <YamlEditor value={yamlContent} onChange={handleEditorChange} />
         </div>
-        <div className="h-full overflow-y-auto bg-white print:contents">
-            <Resume cv={cv} config={config}></Resume>
+        <div className="h-full overflow-y-auto bg-white print:contents" >
+            {resume}
         </div>
     </div>
 }

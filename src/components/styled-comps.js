@@ -1,7 +1,7 @@
 import { formatToTitleCase, parseMarkdown } from '../utils/util'
 
 export function ResumeContainer({ children }) {
-    return <div className="w-dvw sm:w-letter bg-white mx-auto p-4 sm:p-8 print:p-0">
+return <div className="w-letter bg-white mx-auto p-4 sm:p-8 print:p-0">
         {children}
     </div>;
 }
