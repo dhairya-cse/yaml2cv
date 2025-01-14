@@ -1,5 +1,6 @@
 import ReactMarkdown from 'react-markdown';
 import rehypeRaw from 'rehype-raw';
+import YAML from 'yaml';
 
 /**
  * converts input key to title case (from snake case or kebab case)
@@ -62,4 +63,8 @@ export function mergeMapsRecursive(defaultConfig, config) {
     });
 
     return defaultConfig; // Merged map
+}
+
+export function yamlContentToMap(content) {
+    return YAML.parse(content, { mapAsMap: true });
 }

@@ -29,6 +29,18 @@ export function SubsectionHeader({ title, subtitle, rhsTop, rhsBottom }) {
     </div>
 }
 
+export function SubsectionIntroContainer({ children }) {
+    return <div className='text-sm'>
+        {children}
+    </div>
+}
+
+export function SectionIntroContainer({ children }) {
+    return <div className='text-sm'>
+        {children}
+    </div>
+}
+
 export function List({ children }) {
     return <ul className="list-no-break list-disc ml-8 text-sm leading-snug">{children}</ul>;
 }
@@ -52,8 +64,8 @@ export function ItemList({ items, columns }) {
 
     if (Array.isArray(items)) {
         return <List>
-            {items.map((misc) => (
-                <ListItem>{parseMarkdown(misc)}</ListItem>
+            {items.map((misc, index) => (
+                <ListItem key={index}>{parseMarkdown(misc)}</ListItem>
             ))}
         </List>
     }
@@ -61,7 +73,7 @@ export function ItemList({ items, columns }) {
     return <List>
         {
             Array.from(items.entries().map(([key, val], index) => (
-                <ListItem><span className='font-bold'>{formatToTitleCase(key)}:</span> {parseMarkdown(val)}</ListItem>
+                <ListItem key={index}><span className='font-bold'>{formatToTitleCase(key)}:</span> {parseMarkdown(val)}</ListItem>
             )))
         }
     </List>

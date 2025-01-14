@@ -1,9 +1,8 @@
 // pages/index.js
 import fs from 'fs';
 import path from 'path';
-import YAML from 'yaml';
 import { Resume } from '@/components/cv';
-import { mergeMapsRecursive } from '@/utils/util';
+import { mergeMapsRecursive, yamlContentToMap } from '@/utils/util';
 
 const Home = () => {
 
@@ -11,7 +10,7 @@ const Home = () => {
   let cv = data.get('cv');
   let config = data.get('config');
   let defaultConfig = loadYamlToMap('config.yaml').get('config');
-  
+
   config = mergeMapsRecursive(defaultConfig, config);
 
   return (
@@ -22,7 +21,7 @@ const Home = () => {
 function loadYamlToMap(fileName) {
   const filePath = path.join(process.cwd(), `/data/${fileName}`);
   const fileContents = fs.readFileSync(filePath, 'utf8');
-  return YAML.parse(fileContents, { mapAsMap: true });
+  return yamlContentToMap(fileContents);
 }
 
 export default Home;
