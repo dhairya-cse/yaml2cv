@@ -68,3 +68,20 @@ export function mergeMapsRecursive(defaultConfig, config) {
 export function yamlContentToMap(content) {
     return YAML.parse(content, { mapAsMap: true });
 }
+
+export function ensureMap(map) {
+    return map ?? new Map();
+}
+
+export function ensureArr(arr) {
+    return arr ?? new Array();
+}
+
+export function isEmpty(obj) {
+    console.log(obj);
+    if (!obj) return true;
+    if (Array.isArray(obj)) return !obj.length;
+    if (obj instanceof Map) return !obj.size;
+    if (typeof obj === 'object' && Object.getPrototypeOf(obj) === Object.prototype) return !Object.keys(obj).length;
+    return false;
+}

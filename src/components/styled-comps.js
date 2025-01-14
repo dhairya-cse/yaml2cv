@@ -1,7 +1,7 @@
-import { formatToTitleCase, parseMarkdown } from '../utils/util'
+import { formatToTitleCase, isEmpty, parseMarkdown } from '../utils/util'
 
 export function ResumeContainer({ children }) {
-return <div className="w-letter bg-white mx-auto p-4 sm:p-8 print:p-0">
+    return <div className="w-letter bg-white mx-auto p-4 sm:p-8 print:p-0">
         {children}
     </div>;
 }
@@ -58,7 +58,7 @@ export function ContactsContainer({ children }) {
 }
 
 export function ItemList({ items, columns }) {
-    if (!items) {
+    if (isEmpty(items)) {
         return <></>;
     }
 
@@ -70,11 +70,15 @@ export function ItemList({ items, columns }) {
         </List>
     }
 
-    return <List>
-        {
-            Array.from(items.entries().map(([key, val], index) => (
-                <ListItem key={index}><span className='font-bold'>{formatToTitleCase(key)}:</span> {parseMarkdown(val)}</ListItem>
-            )))
-        }
-    </List>
+    if (items instanceof Map) {
+        return <List>
+            {
+                Array.from(items.entries().map(([key, val], index) => (
+                    <ListItem key={index}><span className='font-bold'>{formatToTitleCase(key)}:</span> {parseMarkdown(val)}</ListItem>
+                )))
+            }
+        </List>
+    }
+
+    return <></>
 }
