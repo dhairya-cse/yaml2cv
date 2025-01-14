@@ -1,4 +1,4 @@
-import { formatToTitleCase, isEmpty, parseMarkdown } from '../utils/util'
+import { formatToTitleCase, isEmpty, isString, parseMarkdown } from '../utils/util'
 
 export function ResumeContainer({ children }) {
     return <div className="w-letter bg-white mx-auto p-4 sm:p-8 print:p-0">
@@ -73,9 +73,13 @@ export function ItemList({ items, columns }) {
     if (items instanceof Map) {
         return <List>
             {
-                Array.from(items.entries().map(([key, val], index) => (
-                    <ListItem key={index}><span className='font-bold'>{formatToTitleCase(key)}:</span> {parseMarkdown(val)}</ListItem>
-                )))
+                Array.from(items.entries().map(([key, val], index) => {
+                    if (!isString(val)) {
+                        return <></>
+                    }
+                    return <ListItem key={index}><span className='font-bold'>{formatToTitleCase(key)}:</span> {parseMarkdown(val)}</ListItem>
+                }
+                ))
             }
         </List>
     }

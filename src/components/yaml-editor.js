@@ -46,6 +46,7 @@ const YamlEditor = ({ value, onChange }) => {
   return (
     <CodeMirror
       value={value}
+      minWidth="45rem"
       extensions={[yaml(), yamlLinter, EditorView.lineWrapping]}
       onChange={onChange}
       theme="light"

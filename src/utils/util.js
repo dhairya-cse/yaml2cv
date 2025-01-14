@@ -78,10 +78,21 @@ export function ensureArr(arr) {
 }
 
 export function isEmpty(obj) {
-    console.log(obj);
     if (!obj) return true;
     if (Array.isArray(obj)) return !obj.length;
     if (obj instanceof Map) return !obj.size;
     if (typeof obj === 'object' && Object.getPrototypeOf(obj) === Object.prototype) return !Object.keys(obj).length;
     return false;
+}
+
+export function isMap(obj) {
+    return obj instanceof Map;
+}
+
+export function isString(obj) {
+    return typeof obj === 'string';
+}
+
+export function isArray(obj) {
+    return Array.isArray(obj);
 }

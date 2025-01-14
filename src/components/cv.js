@@ -2,11 +2,11 @@
 
 import { ContactsContainer, SectionHeading, ItemList, SubsectionHeader, SubSectionContainer, SectionContainer, ResumeContainer, ResumeTitle, SubsectionIntroContainer, SectionIntroContainer } from "./styled-comps";
 import { ContactEntry } from "./contact-comps"
-import { ensureMap, formatToTitleCase, isEmpty, mergeMapsRecursive, replaceWithEnDash } from '../utils/util'
+import { ensureMap, formatToTitleCase, isArray, isEmpty, isMap, mergeMapsRecursive, replaceWithEnDash } from '../utils/util'
 
 export function Resume({ cv, config }) {
 
-    if (isEmpty(cv)) {
+    if (isEmpty(cv) || !isMap(cv)) {
         return <ResumeContainer></ResumeContainer>
     }
 
@@ -21,7 +21,7 @@ export function Resume({ cv, config }) {
 
 function Contacts({ contacts, config }) {
 
-    if (isEmpty(contacts)) {
+    if (isEmpty(contacts) || !isMap(contacts)) {
         return <></>
     }
 
@@ -53,7 +53,7 @@ function Sections({ sections, config }) {
 
 function Section({ section, section_key, config }) {
 
-    if (isEmpty(section)) {
+    if (isEmpty(section) || !isMap(section)) {
         return <></>;
     }
 
@@ -75,7 +75,7 @@ function getSectionTitle(section, section_key) {
 }
 
 function SubSections({ subsections, section_config }) {
-    if (isEmpty(subsections)) {
+    if (isEmpty(subsections) || !isMap(subsections)) {
         return <></>
     }
     return (
@@ -90,7 +90,7 @@ function SubSections({ subsections, section_config }) {
 }
 
 function SubSection({ subsection, config, section_config }) {
-    if (isEmpty(subsection)) {
+    if (isEmpty(subsection) || !isMap(subsection)) {
         return <></>
     }
 
