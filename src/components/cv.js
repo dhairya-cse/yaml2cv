@@ -2,9 +2,14 @@
 
 import { ContactsContainer, SectionHeading, ItemList, SubsectionHeader, SubSectionContainer, SectionContainer, ResumeContainer, ResumeTitle, SubsectionIntroContainer, SectionIntroContainer } from "./styled-comps";
 import { ContactEntry } from "./contact-comps"
-import { formatToTitleCase, mergeMapsRecursive, replaceWithEnDash } from '../utils/util'
+import { ensureMap, formatToTitleCase, isEmpty, mergeMapsRecursive, replaceWithEnDash } from '../utils/util'
 
 export function Resume({ cv, config }) {
+
+    if (isEmpty(cv)) {
+        return <ResumeContainer></ResumeContainer>
+    }
+
     return (
         <ResumeContainer>
             <ResumeTitle title={cv.get('name')} />
@@ -15,6 +20,11 @@ export function Resume({ cv, config }) {
 }
 
 function Contacts({ contacts, config }) {
+
+    if (isEmpty(contacts)) {
+        return <></>
+    }
+
     return (
         <ContactsContainer>
             {Array.from(contacts.entries().map(([contacts_key, contact], index) => (
@@ -25,11 +35,16 @@ function Contacts({ contacts, config }) {
 }
 
 function Sections({ sections, config }) {
+
+    if (isEmpty(sections)) {
+        return <></>
+    }
+
     return (
         <>
             {
                 Array.from(sections.entries().map(([section_key, section], index) => (
-                    <Section key={section_key} section_key={section_key} section={section} config={config.get(section_key) || new Map()} />
+                    <Section key={section_key} section_key={section_key} section={section} config={config.get(section_key)} />
                 )))
             }
         </>
@@ -37,6 +52,11 @@ function Sections({ sections, config }) {
 }
 
 function Section({ section, section_key, config }) {
+
+    if (isEmpty(section)) {
+        return <></>;
+    }
+
     return (
         <SectionContainer>
             <SectionHeading heading={getSectionTitle(section, section_key)} />
@@ -55,7 +75,7 @@ function getSectionTitle(section, section_key) {
 }
 
 function SubSections({ subsections, section_config }) {
-    if (!subsections) {
+    if (isEmpty(subsections)) {
         return <></>
     }
     return (
@@ -70,6 +90,9 @@ function SubSections({ subsections, section_config }) {
 }
 
 function SubSection({ subsection, config, section_config }) {
+    if (isEmpty(subsection)) {
+        return <></>
+    }
 
     const field_map_sub = getFieldMap(config);
     const field_map_section = getFieldMap(section_config);
