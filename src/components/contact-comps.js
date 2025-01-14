@@ -1,4 +1,11 @@
+import { isString } from "@/utils/util";
+
 export function ContactEntry({ contact_type, config, value }) {
+
+    if (!isString(value)) {
+        return <></>
+    }
+
     let icon = config.get('icon');
     let color = config.get('color');
     let text = config.get('text');
