@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 export function App({ cvYaml, configYaml }) {
     const [yamlContent, setYamlContent] = useState(cvYaml);
     const [resume, setResume] = useState();
+    const [error, setError] = useState(null);
 
     useEffect(() => {
         try {
@@ -23,6 +24,7 @@ export function App({ cvYaml, configYaml }) {
         }
         catch (error) {
             console.log(error);
+            setError("Incorrect format for YAML, please check");
         }
     }, [yamlContent])
 
