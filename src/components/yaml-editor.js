@@ -2,14 +2,67 @@
 import CodeMirror from "@uiw/react-codemirror";
 import { yaml } from "@codemirror/lang-yaml";
 import { linter, Diagnostic } from "@codemirror/lint";
-import { EditorView } from "@codemirror/view";
+import { EditorView, keymap } from "@codemirror/view";
 import YAML from 'yaml';
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
+import debounce from "lodash/debounce";
 
 
+const AUTOSAVE_DELAY = 1000; // Delay in milliseconds
+
+async function saveFile(content) {
+  console.info("Saving the file")
+  //TODO: implement this
+  console.info("Saved the file")
+}
 
 const YamlEditor = ({ value, onChange }) => {
   const [errors, setErrors] = useState([]);
+  const [lastSavedContent, setLastSavedContent] = useState(value);
+  const [isSaving, setIsSaving] = useState(false);
+
+  const performSave = useCallback(
+    async (newContent) => {
+      if (newContent !== lastSavedContent && !isSaving) {
+        setIsSaving(true);
+        try {
+          await saveFile(newContent);
+          setLastSavedContent(newContent);
+        } catch (error) {
+          console.error("Save failed:", error);
+        } finally {
+          setIsSaving(false);
+        }
+      }
+    },
+    [lastSavedContent, isSaving]
+  );
+
+  // Debounced Save
+  const debouncedSave = useCallback(
+    debounce((newContent) => {
+      performSave(newContent);
+    }, AUTOSAVE_DELAY),
+    [performSave]
+  );
+
+  // Handle Manual Save (Cmd + S)
+  const saveKeymap = keymap.of([
+    {
+      key: "Mod-s",
+      run: () => {
+        performSave(value); // Immediate save on manual trigger
+        return true; // Prevent browser's default "Save As" dialog
+      },
+    },
+  ]);
+
+  useEffect(() => {
+    if (value) {
+      debouncedSave(value); // Trigger autosave on value change
+    }
+    return () => debouncedSave.cancel(); // Cleanup debounce on unmount
+  }, [value, debouncedSave]);
 
   const validateYaml = (doc) => {
     const diagnostics = [];
@@ -47,7 +100,7 @@ const YamlEditor = ({ value, onChange }) => {
     <CodeMirror
       value={value}
       minWidth="45rem"
-      extensions={[yaml(), yamlLinter, EditorView.lineWrapping]}
+      extensions={[yaml(), yamlLinter, EditorView.lineWrapping, saveKeymap]}
       onChange={onChange}
       theme="light"
     />
