@@ -7,7 +7,7 @@ export function ResumeContainer({ children }) {
 }
 
 export function SectionHeading({ heading }) {
-    return <div className="text-lg font-bold text-navy border-b border-navy border-opacity-35 mb-0 pb-0 break-after-avoid">{heading}</div>
+    return <div className="section text-lg font-bold text-navy border-b border-navy border-opacity-35 mb-0 pb-0 print:break-after-avoid-page">{heading}</div>
 }
 
 export function SectionContainer({ children }) {
@@ -36,13 +36,17 @@ export function SubsectionIntroContainer({ children }) {
 }
 
 export function SectionIntroContainer({ children }) {
-    return <div className='text-sm'>
+    if(!children)
+    {
+        return <></>
+    }
+    return <div className='print:break-inside-avoid-page'>
         {children}
     </div>
 }
 
-export function List({ children }) {
-    return <ul className="list-no-break list-disc ml-8 text-sm leading-snug">{children}</ul>;
+export function List({ children, className }) {
+    return <ul className={`list-no-break text-sm list-disc ml-8 leading-snug ${className ?? ''}`}>{children}</ul>;
 }
 
 export function ListItem({ children }) {
@@ -57,13 +61,30 @@ export function ContactsContainer({ children }) {
     return <div className="flex justify-center gap-3 text-sm leading-tight">{children}</div>
 }
 
-export function ItemList({ items, columns }) {
+function getColumnsClass(columns) {
+    if (!columns || typeof columns != 'number') {
+        return 'columns-1'
+    }
+    if (columns == 1) {
+        return 'columns-1'
+    }
+    if (columns == 2) {
+        return 'columns-2'
+    }
+    else {
+        return 'columns-3'
+    }
+}
+
+export function ItemList({ items, columns, className }) {
     if (isEmpty(items)) {
         return <></>;
     }
 
+    className = `${getColumnsClass(columns)} ${className ?? ''}`
+
     if (Array.isArray(items)) {
-        return <List>
+        return <List className={className}>
             {items.map((misc, index) => (
                 <ListItem key={index}>{parseMarkdown(misc)}</ListItem>
             ))}
@@ -71,7 +92,7 @@ export function ItemList({ items, columns }) {
     }
 
     if (items instanceof Map) {
-        return <List>
+        return <List className={className}>
             {
                 Array.from(items.entries().map(([key, val], index) => {
                     if (!isString(val)) {
