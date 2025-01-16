@@ -1,7 +1,7 @@
 "use client"
 import CodeMirror from "@uiw/react-codemirror";
 import { yaml } from "@codemirror/lang-yaml";
-import { linter, Diagnostic } from "@codemirror/lint";
+import { linter } from "@codemirror/lint";
 import { EditorView, keymap } from "@codemirror/view";
 import YAML from 'yaml';
 import { useState, useCallback, useEffect } from "react";

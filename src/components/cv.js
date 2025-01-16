@@ -57,12 +57,14 @@ function Section({ section, section_key, config }) {
         return <></>;
     }
 
+    const columns = config ? config.get('bullets_cols'): 1;
+
     return (
         <SectionContainer>
             <SectionHeading heading={getSectionTitle(section, section_key)} />
             <SectionIntroContainer>{section.get('description')}</SectionIntroContainer>
             <SubSections subsections={section.get('subsections')} section_config={config}></SubSections>
-            <ItemList items={section.get('bullets')} />
+            <ItemList columns={columns} items={section.get('bullets')} />
         </SectionContainer>
     );
 }

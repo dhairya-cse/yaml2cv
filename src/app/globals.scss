@@ -21,13 +21,13 @@ html {
     font-size: 14.5px;
   }
 
-  p,
-  li {
-    @apply break-inside-avoid;
+  .list-no-break li:first-child,
+  .list-no-break li:last-child {
+    @apply break-before-avoid-page;
   }
 
-  .list-no-break ul>li:first-child,
-  .list-no-break ul>li:last-child {
-    @apply break-before-avoid-page;
+  p,
+  li {
+    @apply break-inside-avoid-page;
   }
 }
