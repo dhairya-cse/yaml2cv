@@ -17,7 +17,8 @@ async function saveFile(content) {
 }
 
 const YamlEditor = ({ value, onChange }) => {
-  const [errors, setErrors] = useState([]);
+  const [error, setError] = useState(null);
+  // TODO: use error context provider for centralised handling!
   const [lastSavedContent, setLastSavedContent] = useState(value);
   const [isSaving, setIsSaving] = useState(false);
 
@@ -68,10 +69,12 @@ const YamlEditor = ({ value, onChange }) => {
     const diagnostics = [];
     try {
       YAML.parse(doc); // Parse YAML content
+      setError(null);
     } catch (err) {
       // Extract error details
       const { message, pos, linePos } = err;
-      console.log(message, "pos", pos, linePos);
+
+      setError(message);
 
       if (pos !== undefined && linePos) {
         diagnostics.push({
@@ -97,13 +100,16 @@ const YamlEditor = ({ value, onChange }) => {
   const yamlLinter = linter((view) => debouncedLinter(view));
 
   return (
-    <CodeMirror
-      value={value}
-      minWidth="45rem"
-      extensions={[yaml(), yamlLinter, EditorView.lineWrapping, saveKeymap]}
-      onChange={onChange}
-      theme="light"
-    />
+    <div className="content">
+      <CodeMirror
+        value={value}
+        minWidth="45rem"
+        extensions={[yaml(), yamlLinter, EditorView.lineWrapping, saveKeymap]}
+        onChange={onChange}
+        theme="light"
+      />
+      {error ? <pre className="fixed bottom-0 text-sm  bg-red-400 bg-opacity-95 p-1 w-full"><span className="font-bold">Error:</span> {error}</pre> : <></>}
+    </div>
   );
 };
 
