@@ -34,9 +34,7 @@ export function App({ cvYaml, configYaml, loggedIn, canEdit }) {
 
     if (canEdit) {
         return <div className="flex h-screen overflow-hidden print:contents">
-            <div className="flex-1 h-full overflow-y-auto bg-white border-r-slate-300 border-r-2 border-black print:hidden">
-                <YamlEditor value={yamlContent} onChange={handleEditorChange} />
-            </div>
+            <EditorWithContainer yamlContent={yamlContent} handleEditorChange={handleEditorChange} />
             <ResumeWithContainer resume={resume} />
         </div>
     } else {
@@ -45,7 +43,9 @@ export function App({ cvYaml, configYaml, loggedIn, canEdit }) {
 }
 
 function EditorWithContainer({ yamlContent, handleEditorChange }) {
-    return
+    return <div className="flex-1 h-full overflow-y-auto bg-white border-r-slate-300 border-r-2 border-black print:hidden">
+        <YamlEditor value={yamlContent} onChange={handleEditorChange} />
+    </div>
 }
 
 function ResumeWithContainer({ resume }) {
