@@ -4,36 +4,38 @@ import { yaml } from "@codemirror/lang-yaml";
 import { linter } from "@codemirror/lint";
 import { EditorView, keymap } from "@codemirror/view";
 import YAML from 'yaml';
-import { useState, useCallback, useEffect, useContext } from "react";
+import { useState, useCallback, useEffect } from "react";
 import debounce from "lodash/debounce";
 import { useError } from "./error-provider";
+import { formatDistanceToNow, format } from "date-fns";
+import {saveFileOnServer} from '@/app/save-file'
 
 
 const AUTOSAVE_DELAY = 1000; // Delay in milliseconds
 
-async function saveFile(content) {
-  console.info("Saving the file")
-  //TODO: implement this
-  console.info("Saved the file")
-}
-
 const YamlEditor = ({ value, onChange }) => {
-  const { pushError, clearErrors } = useError();
+  const { pushError, clearErrors, putError } = useError();
   const [lastSavedContent, setLastSavedContent] = useState(value);
+  const [lastSavedTime, setLastSavedTime] = useState();
   const [isSaving, setIsSaving] = useState(false);
 
   const performSave = useCallback(
     async (newContent) => {
       if (newContent !== lastSavedContent && !isSaving) {
         setIsSaving(true);
-        try {
-          await saveFile(newContent);
+        console.info("Saving the file")
+        const res = await saveFileOnServer({content: newContent })
+        if (res.success) {
           setLastSavedContent(newContent);
-        } catch (error) {
-          console.error("Save failed:", error);
-        } finally {
-          setIsSaving(false);
+          console.info("Saved the file")
+          clearErrors('file-save')
+          setLastSavedTime(new Date());
         }
+        else {
+          putError('file-save', `File could not be saved: ${res.error}`)
+          console.error("File not saved", res.error)
+        }
+        setIsSaving(false);
       }
     },
     [lastSavedContent, isSaving]
@@ -101,6 +103,7 @@ const YamlEditor = ({ value, onChange }) => {
 
   return (
     <div className="content">
+      {/* <p className="">Last saved: {renderTime(lastSavedTime)}</p> */}
       <CodeMirror
         value={value}
         minWidth="45rem"
@@ -113,3 +116,19 @@ const YamlEditor = ({ value, onChange }) => {
 };
 
 export default YamlEditor;
+
+
+const renderTime = (lastSavedTime) => {
+  if (!lastSavedTime) {
+    return "";
+  }
+
+  const now = new Date();
+
+  // If the time difference is less than 1 second, display "now"
+  if (now - lastSavedTime < 1000) {
+    return "now";
+  }
+  
+  return formatDistanceToNow(lastSavedTime, { addSuffix: true });
+};

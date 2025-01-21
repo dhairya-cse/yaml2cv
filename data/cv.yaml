@@ -16,7 +16,7 @@ cv:
           duration: "May 2023 -- Current"
           responsibilities:
             - "Facilitating authorisation journey of Alba with ground-up technological development."
-            - "Collaborated with cross-functional teams to understand requirements and drive the development of greenfield projects."
+            - "Collaborated with cross-functional teams to understand requirements and drive the development of greenfield projectds."
             - "Developed backend services for deposits origination and operations portal using a microservices architecture, ensuring robustness with unit tests."
             - "Integrated Mambu for core banking and RiskNarrative(LexisNexis) APIs for customer KYC with in-house services."
             - "Built an in-house Task Approval system engineered for easy extensibility to support future use cases."
