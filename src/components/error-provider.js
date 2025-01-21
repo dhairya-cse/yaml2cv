@@ -15,10 +15,10 @@ export const ErrorProvider = ({ children }) => {
         });
     };
 
-    const putErrors = (context, errors) => {
+    const putError = (context, error) => {
         setErrors((prevErrors) => {
             const newErrors = { ...prevErrors };
-            newErrors[context] = [...errors];
+            newErrors[context] = [error];
             return newErrors;
         });
     }
@@ -41,7 +41,7 @@ export const ErrorProvider = ({ children }) => {
     };
 
     return (
-        <ErrorContext.Provider value={{ errors, pushError, putErrors, getAllErrors, clearErrors, clearAllErrors }}>
+        <ErrorContext.Provider value={{ errors, pushError, putError, getAllErrors, clearErrors, clearAllErrors }}>
             {children}
         </ErrorContext.Provider>
     );
