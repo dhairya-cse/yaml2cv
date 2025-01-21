@@ -8,7 +8,7 @@ import { useState, useCallback, useEffect } from "react";
 import debounce from "lodash/debounce";
 import { useError } from "./error-provider";
 import { formatDistanceToNow, format } from "date-fns";
-import {saveFileOnServer} from '@/app/save-file'
+import { saveFileOnServer } from '@/app/save-file'
 
 
 const AUTOSAVE_DELAY = 1000; // Delay in milliseconds
@@ -24,7 +24,7 @@ const YamlEditor = ({ value, onChange }) => {
       if (newContent !== lastSavedContent && !isSaving) {
         setIsSaving(true);
         console.info("Saving the file")
-        const res = await saveFileOnServer({content: newContent })
+        const res = await saveFileOnServer({ content: newContent })
         if (res.success) {
           setLastSavedContent(newContent);
           console.info("Saved the file")
@@ -102,15 +102,17 @@ const YamlEditor = ({ value, onChange }) => {
   const yamlLinter = linter((view) => debouncedLinter(view));
 
   return (
-    <div className="content">
-      {/* <p className="">Last saved: {renderTime(lastSavedTime)}</p> */}
-      <CodeMirror
-        value={value}
-        minWidth="45rem"
-        extensions={[yaml(), yamlLinter, EditorView.lineWrapping, saveKeymap]}
-        onChange={onChange}
-        theme="light"
-      />
+    <div className="h-full">
+      <p className="bg-slate-200">Last saved: {renderTime(lastSavedTime)}</p>
+      <div className="content h-full overflow-y-auto">
+        <CodeMirror
+          value={value}
+          minWidth="45rem"
+          extensions={[yaml(), yamlLinter, EditorView.lineWrapping, saveKeymap]}
+          onChange={onChange}
+          theme="light"
+        />
+      </div>
     </div>
   );
 };
@@ -125,10 +127,9 @@ const renderTime = (lastSavedTime) => {
 
   const now = new Date();
 
-  // If the time difference is less than 1 second, display "now"
-  if (now - lastSavedTime < 1000) {
-    return "now";
+  if (now - lastSavedTime < 5000) {
+    return "just now";
   }
-  
+
   return formatDistanceToNow(lastSavedTime, { addSuffix: true });
 };
