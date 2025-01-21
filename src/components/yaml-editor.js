@@ -7,7 +7,7 @@ import YAML from 'yaml';
 import { useState, useCallback, useEffect } from "react";
 import debounce from "lodash/debounce";
 import { useError } from "./error-provider";
-import { formatDistanceToNow, format } from "date-fns";
+import { formatDistanceToNow } from "date-fns";
 import { saveFileOnServer } from '@/app/save-file'
 
 
