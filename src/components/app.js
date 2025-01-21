@@ -78,7 +78,7 @@ function AppContainer({ children, canEdit }) {
 
 
 function EditorWithContainer({ yamlContent, handleEditorChange }) {
-    return <div className="flex-1 h-full overflow-y-auto bg-white border-r-slate-300 border-r-2 border-black print:hidden">
+    return <div className="flex-1 h-full bg-white border-r-slate-300 border-r-2 border-black print:hidden">
         <YamlEditor value={yamlContent} onChange={handleEditorChange} />
     </div>
 }
