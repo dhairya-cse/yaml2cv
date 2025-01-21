@@ -102,8 +102,8 @@ const YamlEditor = ({ value, onChange }) => {
   const yamlLinter = linter((view) => debouncedLinter(view));
 
   return (
-    <div className="h-full">
-      <p className="bg-slate-200">Last saved: {renderTime(lastSavedTime)}</p>
+    <div className="content h-full">
+      {value && <p className="bg-slate-200">Last saved: {renderTime(lastSavedTime)}</p>}
       <div className="content h-full overflow-y-auto">
         <CodeMirror
           value={value}

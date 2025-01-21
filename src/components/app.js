@@ -3,19 +3,21 @@
 import { yamlContentToMap, mergeMapsRecursive, isArray } from "@/utils/util";
 import { Resume } from "./cv"
 import YamlEditor from "./yaml-editor"
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { ErrorProvider, useError } from "./error-provider";
 
 
 export function App({ cvYaml, configYaml, loggedIn, canEdit }) {
     return <ErrorProvider>
-        <App_ cvYaml={cvYaml} configYaml={configYaml} loggedIn={loggedIn} canEdit={canEdit} />
+            <App_ cvYaml={cvYaml} configYaml={configYaml} loggedIn={loggedIn} canEdit={canEdit} />
     </ErrorProvider>
 }
 
 export function App_({ cvYaml, configYaml, loggedIn, canEdit }) {
     const [yamlContent, setYamlContent] = useState(cvYaml);
     const [resume, setResume] = useState();
+    const [loading, setLoading] = useState(true);
+
 
     const {pushError, clearErrors} = useError()
 
@@ -36,6 +38,8 @@ export function App_({ cvYaml, configYaml, loggedIn, canEdit }) {
             console.log("HERERERERE")
             pushError('app',"Incorrect format for YAML, please check");
             console.log(error);
+        } finally {
+            setLoading(false); // Mark loading as complete
         }
     }, [yamlContent])
 
@@ -43,6 +47,10 @@ export function App_({ cvYaml, configYaml, loggedIn, canEdit }) {
         setYamlContent(value);
     };
 
+    if(loading)
+    {
+        return <>Loading...</>
+    }
 
     return <AppContainer canEdit={canEdit}>
             {canEdit ? <EditorWithContainer yamlContent={yamlContent} handleEditorChange={handleEditorChange} /> : <></>}
