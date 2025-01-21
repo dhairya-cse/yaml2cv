@@ -1,16 +1,26 @@
 "use client"
 
-import { yamlContentToMap, mergeMapsRecursive } from "@/utils/util";
+import { yamlContentToMap, mergeMapsRecursive, isArray } from "@/utils/util";
 import { Resume } from "./cv"
 import YamlEditor from "./yaml-editor"
 import { useEffect, useState } from "react";
+import { ErrorProvider, useError } from "./error-provider";
+
 
 export function App({ cvYaml, configYaml, loggedIn, canEdit }) {
+    return <ErrorProvider>
+        <App_ cvYaml={cvYaml} configYaml={configYaml} loggedIn={loggedIn} canEdit={canEdit} />
+    </ErrorProvider>
+}
+
+export function App_({ cvYaml, configYaml, loggedIn, canEdit }) {
     const [yamlContent, setYamlContent] = useState(cvYaml);
     const [resume, setResume] = useState();
-    const [error, setError] = useState(null);
+
+    const {pushError, clearErrors} = useError()
 
     useEffect(() => {
+        clearErrors('app');
         try {
             const cvData = yamlContentToMap(yamlContent);
             const cv = cvData.get('cv');
@@ -23,8 +33,9 @@ export function App({ cvYaml, configYaml, loggedIn, canEdit }) {
             setResume(resumeEvaluated);
         }
         catch (error) {
+            console.log("HERERERERE")
+            pushError('app',"Incorrect format for YAML, please check");
             console.log(error);
-            setError("Incorrect format for YAML, please check");
         }
     }, [yamlContent])
 
@@ -32,15 +43,39 @@ export function App({ cvYaml, configYaml, loggedIn, canEdit }) {
         setYamlContent(value);
     };
 
+
+    return <AppContainer canEdit={canEdit}>
+            {canEdit ? <EditorWithContainer yamlContent={yamlContent} handleEditorChange={handleEditorChange} /> : <></>}
+            <ResumeWithContainer resume={resume} />
+            <Errors></Errors>
+    </AppContainer>
+}
+
+
+function Errors() {
+    const { getAllErrors} = useError()
+    const errors = getAllErrors()
+    if (!errors || !isArray(errors) || !errors.length) {
+        return <></>;
+    }
+
+    return <pre className="fixed bottom-0 text-sm  bg-red-400 bg-opacity-95 p-1 w-full">
+        <span className="font-bold">Error:</span>
+        {errors.map((error, index) => <p key={`errors-${index}`}>{error}</p>)}
+    </pre>
+}
+
+function AppContainer({ children, canEdit }) {
     if (canEdit) {
         return <div className="flex h-screen overflow-hidden print:contents">
-            <EditorWithContainer yamlContent={yamlContent} handleEditorChange={handleEditorChange} />
-            <ResumeWithContainer resume={resume} />
+            {children}
         </div>
-    } else {
-        return resume;
+    }
+    else {
+        return <>{children}</>
     }
 }
+
 
 function EditorWithContainer({ yamlContent, handleEditorChange }) {
     return <div className="flex-1 h-full overflow-y-auto bg-white border-r-slate-300 border-r-2 border-black print:hidden">

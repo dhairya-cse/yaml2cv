@@ -4,8 +4,9 @@ import { yaml } from "@codemirror/lang-yaml";
 import { linter } from "@codemirror/lint";
 import { EditorView, keymap } from "@codemirror/view";
 import YAML from 'yaml';
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback, useEffect, useContext } from "react";
 import debounce from "lodash/debounce";
+import { useError } from "./error-provider";
 
 
 const AUTOSAVE_DELAY = 1000; // Delay in milliseconds
@@ -17,8 +18,7 @@ async function saveFile(content) {
 }
 
 const YamlEditor = ({ value, onChange }) => {
-  const [error, setError] = useState(null);
-  // TODO: use error context provider for centralised handling!
+  const { pushError, clearErrors } = useError();
   const [lastSavedContent, setLastSavedContent] = useState(value);
   const [isSaving, setIsSaving] = useState(false);
 
@@ -66,15 +66,15 @@ const YamlEditor = ({ value, onChange }) => {
   }, [value, debouncedSave]);
 
   const validateYaml = (doc) => {
-    const diagnostics = [];
+    const diagnostics = []
+    clearErrors('editor')
     try {
-      YAML.parse(doc); // Parse YAML content
-      setError(null);
+      YAML.parse(doc);
     } catch (err) {
-      // Extract error details
+
       const { message, pos, linePos } = err;
 
-      setError(message);
+      pushError('editor', message);
 
       if (pos !== undefined && linePos) {
         diagnostics.push({
@@ -108,7 +108,6 @@ const YamlEditor = ({ value, onChange }) => {
         onChange={onChange}
         theme="light"
       />
-      {error ? <pre className="fixed bottom-0 text-sm  bg-red-400 bg-opacity-95 p-1 w-full"><span className="font-bold">Error:</span> {error}</pre> : <></>}
     </div>
   );
 };
