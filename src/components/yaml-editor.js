@@ -11,7 +11,7 @@ import { formatDistanceToNow } from "date-fns";
 import { saveFileOnServer } from '@/app/save-file'
 
 
-const AUTOSAVE_DELAY = 1000; // Delay in milliseconds
+const AUTOSAVE_DELAY = 5000; // Delay in milliseconds
 
 const YamlEditor = ({ value, onChange }) => {
   const { pushError, clearErrors, putError } = useError();
