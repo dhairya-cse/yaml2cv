@@ -41,7 +41,7 @@ const YamlEditor = ({ value, onChange }) => {
     [lastSavedContent, isSaving]
   );
 
-  // Debounced Save
+
   const debouncedSave = useCallback(
     debounce((newContent) => {
       performSave(newContent);
@@ -69,14 +69,11 @@ const YamlEditor = ({ value, onChange }) => {
 
   const validateYaml = (doc) => {
     const diagnostics = []
-    clearErrors('editor')
     try {
       YAML.parse(doc);
     } catch (err) {
 
       const { message, pos, linePos } = err;
-
-      pushError('editor', message);
 
       if (pos !== undefined && linePos) {
         diagnostics.push({
@@ -90,13 +87,11 @@ const YamlEditor = ({ value, onChange }) => {
     return diagnostics;
   };
 
-  const debouncedLinter = useCallback(
+  const debouncedLinter =
     (view) => {
       const doc = view.state.doc.toString();
       return validateYaml(doc);
-    },
-    [validateYaml]
-  );
+    }
 
   // Linter extension triggered only on keypress
   const yamlLinter = linter((view) => debouncedLinter(view));

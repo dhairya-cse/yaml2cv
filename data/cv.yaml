@@ -1,4 +1,4 @@
-cv:
+ cv:
   name: "Dhairya Bhardwaj"
   contacts:
     phone: "+44 7741 383793"
@@ -7,7 +7,10 @@ cv:
     github: "https://github.com/dhairya-cse"
 
   sections:
+    introduction:
+      description: "Looking for a software engineering postition in industry with around 4 years of experience in finance industry."
     experience:
+      title: "Professional Experience"
       subsections:
         alba:
           company: "Alba Co Ltd."
@@ -15,13 +18,14 @@ cv:
           location: "London, UK"
           duration: "May 2023 -- Current"
           responsibilities:
-            - "Facilitatingg authorisation journey of Alba with ground-up technological development."
-            - "Collaborated with cross-functional teams to understand requirements and drive the development of greenfield projectds."
+            - "Facilitating authorisation journey of Alba with ground-up technological development."
+            - "Collaborated with cross-functional teams to understand requirements and drive the development of greenfield projects."
             - "Developed backend services for deposits origination and operations portal using a microservices architecture, ensuring robustness with unit tests."
             - "Integrated Mambu for core banking and RiskNarrative(LexisNexis) APIs for customer KYC with in-house services."
             - "Built an in-house Task Approval system engineered for easy extensibility to support future use cases."
             - "Used Spring Security with Microsoft Entra ID to set up Role-Based Access Control (RBAC) ensuring secure access to the APIs."
             - "Implemented scheduled jobs with Azure Function Apps in Python."
+            - "**Tech Stack:** C++"
 
         dhani:
           company: "Dhani Loans And Services Ltd."
@@ -35,6 +39,7 @@ cv:
             - "Implemented scheduled jobs for reconciliation of payments."
             - "Used RegEx for parsing inputs, transforming text, and masking sensitive data in logs."
             - "Developed Python scripts to automate and streamline various ad-hoc tasks, enhancing efficiency and reducing manual effort."
+            - "**Tech Stack:** C++"
 
         appperfect:
           company: "AppPerfect"
@@ -44,6 +49,7 @@ cv:
           responsibilities:
             - "Automated data collection with a web scraper using Selenium."
             - "Developed an interface-driven system to collect and standardize data from multiple crypto exchanges utilizing REST APIs."
+            - "**Tech Stack:** Java 8, Selenium, Apache Cassendra"
 
     technical_skills:
       bullets:
@@ -63,21 +69,50 @@ cv:
           cgpa: "8.71"
           location: "Chennai, Tamilnadu"
 
+        skit:
+          institution: "Swami Keshvanand Institute of Technology, Jaipur"
+          degree: "Bachelors of Technology in Computer Science & Engineering"
+          year: "2018"
+          cgpa: "7.74"
+          location: "Jaipur, Rajasthan"
+
     projects:
       subsections:
-        explorewithin:
-          name: "Explorewith.in"
+        jinsil:
+          name: "Jinsil: Personal Projects and Self Hosting"
           description:
-            - "Deployed personal mail server using Mailcow, created Docker image for Bhairavi, and hosted explorewith.in using WordPress Docker image."
+            - "Hosted [*Bhariavi*](https://bhariavi.jinsil.me), and my personal blog [*ink.jinsil.me*](https://ink.jinsil.me) using docker-compose and caddy web server"
+            - "Self hosted postal mail server for sending emails and keycloak for identity and access management."
+            - "Developed yaml2cv: a resume builder application powered with live editor feature with Next.js"
+            - "Configured Keycloak as an OpenID Connect provider to enable Single Sign-On (SSO) across supported services."
+            - "**Tech Stack: Docker, docker-compose, Ubuntu 24.10, Caddy, Keycloak, Postal, Next.js, Cloudflare**"
 
         bhairavi:
           name: "Bhairavi: A music learning application"
           description:
-            - "Developed a web-based music learning app, used Spleeter for extraction of vocals track, Essentia for pitch analysis, and WASM compiled from C language program for running high-performance routines in the browser."
+            - "Developed a web-based music learning app that allows user to sing along a re-synthesised audio in their preferred pitch instead of trying to match singer's pitch."
+            - "Used Spleeter for extraction of vocals track, Essentia for pitch analysis, and synthesied audio using five harmonic synthesizer."
+            - "Compiled C language programs to WASM to for running high perfromance routines in the web browser"
+            - "**Tech Stack: Python 3, Flask, Jinja2, JS, Web Assembly(WASM), C, Spleeter, Essentia, Web Audio API**"
+
         irs:
           name: "Information Retrieval System"
           description:
-            - "Implemented Explicit Semantic Analysis for document similarity using Wikipedia articles; improved results with Page Rank Analysis."
+            - "Implemented Explicit Semantic Analysis for calculating documents and word similarity scores using Wikipedia articles that can be used to retrive most relevent documents from an information base."
+            - "Improved the results using Page Rank Analysis."
+            - "**Tech Stack: Python 3, NumPy, SciPy**"
+
+        idv:
+          name: "Speaker Identification & Verification System"
+          description:
+            - "Developed a text-independent speaker identification and verification system based on UBM-GMM Model."
+            - "**Tech Stack: Python 3, NumPy, SciPy**"
+            
+        time-table-gen:
+          name: "Automatic Time Table Generator"
+          description:
+            - "Developed a Genetic Algorithm based software for generating timetables including classroom allocations for Universities and Schools."
+            - "**Tech Stack: Python 3, PyQt 5**"
 
     miscellaneous:
       bullets:
