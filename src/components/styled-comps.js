@@ -20,9 +20,9 @@ export function SubSectionContainer({ children }) {
     return <div className='mb-1'>{children}</div>
 }
 
-export function SubsectionHeader({ title, subtitle, rhsTop, rhsBottom }) {
+export function SubsectionHeader({ title, subtitle, rhsTop, rhsBottom, link }) {
     return <div className="grid grid-cols-1 sm:grid-cols-[auto,auto] w-auto leading-tight break-inside-avoid-page">
-        <div className="font-bold">{title}</div>
+        <div className="font-bold"><a href={link}>{title}</a></div>
         <div className="sm:font-bold sm:text-right text-sm">{rhsTop}</div>
         <div className="text-sm"><em>{subtitle}</em></div>
         <div className="text-sm sm:text-right"><em>{rhsBottom}</em></div>

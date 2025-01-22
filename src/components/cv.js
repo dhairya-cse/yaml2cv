@@ -84,7 +84,7 @@ function SubSections({ subsections, section_config }) {
         <>
             {
                 Array.from(subsections.entries().map(([subsection_key, subsection], index) => (
-                    <SubSection key={subsection_key} subsection={subsection} config={section_config.get(subsection_key) || new Map()} section_config={section_config} />
+                    <SubSection key={subsection_key} subsection={subsection} config={section_config?.get(subsection_key) || new Map()} section_config={section_config} />
                 )))
             }
         </>
@@ -107,10 +107,11 @@ function SubSection({ subsection, config, section_config }) {
     const rhsBottom = getPropertyFromSubsection(subsection, field_map, 'rhsBottom');
     const desc = getPropertyFromSubsection(subsection, field_map, 'intro');
     const bullets = getBulletsFromSubsection(subsection, field_map);
+    const link = getPropertyFromSubsection(subsection, field_map, 'link');
 
     return (
         <SubSectionContainer>
-            <SubsectionHeader title={title} subtitle={subtitle} rhsTop={replaceWithEnDash(rhsTop)} rhsBottom={rhsBottom} />
+            <SubsectionHeader title={title} subtitle={subtitle} rhsTop={replaceWithEnDash(rhsTop)} rhsBottom={rhsBottom} link={link}/>
             <SubsectionIntroContainer>{desc}</SubsectionIntroContainer>
             <ItemList items={bullets} />
         </SubSectionContainer>

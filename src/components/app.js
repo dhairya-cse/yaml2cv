@@ -35,7 +35,6 @@ export function App_({ cvYaml, configYaml, loggedIn, canEdit }) {
             setResume(resumeEvaluated);
         }
         catch (error) {
-            console.log("HERERERERE")
             pushError('app',"Incorrect format for YAML, please check");
             console.log(error);
         } finally {
@@ -55,7 +54,7 @@ export function App_({ cvYaml, configYaml, loggedIn, canEdit }) {
     return <AppContainer canEdit={canEdit}>
             {canEdit ? <EditorWithContainer yamlContent={yamlContent} handleEditorChange={handleEditorChange} /> : <></>}
             <ResumeWithContainer resume={resume} />
-            <Errors></Errors>
+            {/* <Errors></Errors> */}
     </AppContainer>
 }
 
@@ -67,7 +66,7 @@ function Errors() {
         return <></>;
     }
 
-    return <pre className="fixed bottom-0 text-sm  bg-red-400 bg-opacity-95 p-1 w-full">
+    return <pre className="fixed bottom-0 text-sm  bg-red-400 text-opacity-10 bg-opacity-10 p-1 w-full">
         <span className="font-bold">Error:</span>
         {errors.map((error, index) => <p key={`errors-${index}`}>{error}</p>)}
     </pre>

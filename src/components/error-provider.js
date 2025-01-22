@@ -10,7 +10,6 @@ export const ErrorProvider = ({ children }) => {
             const newErrors = { ...prevErrors };
             const contextErrors = newErrors[context] || [];
             newErrors[context] = [...contextErrors, error];
-            console.log("Pushing to context", context, error, prevErrors, newErrors);
             return newErrors;
         });
     };
