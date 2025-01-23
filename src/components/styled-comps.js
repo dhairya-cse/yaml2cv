@@ -21,7 +21,7 @@ export function SubSectionContainer({ children }) {
 }
 
 export function SubsectionHeader({ title, subtitle, rhsTop, rhsBottom, link }) {
-    return <div className="grid grid-cols-1 sm:grid-cols-[auto,auto] w-auto leading-tight break-inside-avoid-page">
+    return <div className="grid grid-cols-1 sm:grid-cols-[auto,auto] w-auto leading-tight break-inside-avoid-page break-after-avoid-page">
         <div className="font-bold"><a href={link}>{title}</a></div>
         <div className="sm:font-bold sm:text-right text-sm">{rhsTop}</div>
         <div className="text-sm"><em>{subtitle}</em></div>
@@ -30,6 +30,9 @@ export function SubsectionHeader({ title, subtitle, rhsTop, rhsBottom, link }) {
 }
 
 export function SubsectionIntroContainer({ children }) {
+    if(!children){
+        return <></>;
+    }
     return <div className='text-sm'>
         {children}
     </div>
@@ -40,7 +43,7 @@ export function SectionIntroContainer({ children }) {
     {
         return <></>
     }
-    return <div className='print:break-inside-avoid-page'>
+    return <div className='text-sm print:break-inside-avoid-page'>
         {children}
     </div>
 }
@@ -50,7 +53,7 @@ export function List({ children, className }) {
 }
 
 export function ListItem({ children }) {
-    return <li className='pr-3'>{children}</li>;
+    return <li className='pr-3 break-inside-avoid-page'>{children}</li>;
 }
 
 export function ResumeTitle({ title }) {
