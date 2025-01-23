@@ -8,7 +8,7 @@
 
   sections:
     introduction:
-      description: "Looking for a software engineering postition in industry with around 4 years of experience in finance industry."
+      description: "Passionate and experienced software engineer specializing in scalable, secure, and modular software development. Contributed to fintech applications serving over 25 million users, with expertise in backend systems and ground-up project development. Skilled at aligning technical solutions with business goals and driving innovation through collaboration. Enthusiastic about integrating AI technologies like Large Language Models (LLMs) to create impactful, user-focused products"
     experience:
       title: "Professional Experience"
       subsections:
@@ -53,7 +53,7 @@
 
     technical_skills:
       bullets:
-        languages: "Java, Python, C++, JavaScript, TypeScript, C"
+        languages: "Java, Python, C, C++, JavaScript, TypeScript"
         frameworks: "Spring Boot, Flask, Next.js, React"
         cloud: "Microsoft Azure, GCP, AWS"
         tools: "Git, Docker, Nginx"
@@ -91,8 +91,8 @@
           name: "Bhairavi: A music learning application"
           description:
             - "Developed a web-based music learning app that allows user to sing along a re-synthesised audio in their preferred pitch instead of trying to match singer's pitch."
-            - "Used Spleeter for extraction of vocals track, Essentia for pitch analysis, and synthesied audio using five harmonic synthesizer."
-            - "Compiled C language programs to WASM to for running high perfromance routines in the web browser"
+            - "Used Spleeter for extraction of vocals track from a song, Essentia for pitch analysis, and re-synthesied audio using five harmonic synthesizer."
+            - "Compiled C language programs to WASM for running high performance routines in web browsers"
             - "**Tech Stack: Python 3, Flask, Jinja2, JS, Web Assembly(WASM), C, Spleeter, Essentia, Web Audio API**"
 
         irs:

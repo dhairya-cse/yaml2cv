@@ -4,21 +4,15 @@
 
 @import "computer-modern/index.css";
 
-@page {
-  margin: 0rem;
-  margin-top: 2rem;
-  margin-bottom: 2rem;
-  margin-left: 2rem;
-  margin-right: 2rem;
-}
-
 html {
-  font-size: 14.5px;
+  font-size: 14.6px;
 }
 
 @media print {
-  html {
-    font-size: 14.5px;
+
+  @page {
+    margin: 2rem;
+    padding: 0rem;
   }
 
   .list-no-break li:first-child,
@@ -26,8 +20,7 @@ html {
     @apply break-before-avoid-page;
   }
 
-  p,
   li {
-    @apply break-inside-avoid-page;
+    page-break-inside: avoid;
   }
 }
