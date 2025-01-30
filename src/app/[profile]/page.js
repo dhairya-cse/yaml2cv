@@ -1,15 +1,20 @@
-import path from 'path';
-import fs from 'fs';
 import { yamlContentToMap, mergeMapsRecursive, isArray } from "@/utils/util";
 import { Resume } from "@/components/cv";
+import { loadCvFile, loadConfigFile, cvFileExists } from "@/utils/server-utils";
+import { notFound } from "next/navigation";
 
 
 export default async function Page({ params }) {
     const profile = (await params).profile;
     const loggedInUser = 'dhairya'
 
-    let cvYaml = loadFileContent('cv.yaml')
-    let defaultConfigYaml = loadFileContent('config.yaml');
+    const cvExists = await cvFileExists(profile);
+    if (!cvExists) {
+        return <>Not Found</>
+    }
+
+    let cvYaml = await loadCvFile(profile);
+    let defaultConfigYaml = await loadConfigFile();
 
     const cvData = yamlContentToMap(cvYaml);
     const cv = cvData.get('cv');
@@ -18,9 +23,4 @@ export default async function Page({ params }) {
     config = mergeMapsRecursive(defaultConfig, config);
 
     return <Resume cv={cv} config={config}></Resume>
-}
-
-function loadFileContent(fileName) {
-    const filePath = path.join(process.cwd(), `/data/${fileName}`);
-    return fs.readFileSync(filePath, 'utf8');
 }

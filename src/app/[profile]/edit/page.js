@@ -1,20 +1,24 @@
 import { App } from '@/components/app'
-import path from 'path';
-import fs from 'fs';
+import { redirect } from 'next/navigation';
+import { loadCvFile, loadConfigFile } from '@/utils/server-utils'
 
 export default async function Page({ params }) {
     const profile = (await params).profile;
-    const loggedInUser = 'dhairya'
+    const loggedInUser = 'dhairya';
+
+    const canEdit = profile === loggedInUser;
 
     const loggedIn = !!loggedInUser;
-    const canEdit = profile === loggedInUser;
-    
-    let cvYaml = loadFileContent('cv.yaml')
-    let defaultConfigYaml = loadFileContent('config.yaml');
-    return <App cvYaml={cvYaml} configYaml={defaultConfigYaml} loggedIn={loggedIn} canEdit={canEdit}></App>
-}
 
-function loadFileContent(fileName) {
-    const filePath = path.join(process.cwd(), `/data/${fileName}`);
-    return fs.readFileSync(filePath, 'utf8');
+    if (!loggedIn) {
+        redirect('/login');
+    }
+
+    if (!canEdit) {
+        return <div>You are not allowed to edit this <a href={`/${profile}`} className='text-sky-100'>CV</a></div>
+    }
+
+    let cvYaml = await loadCvFile(profile);
+    let defaultConfigYaml = await loadConfigFile();
+    return <App cvYaml={cvYaml} configYaml={defaultConfigYaml}></App>
 }

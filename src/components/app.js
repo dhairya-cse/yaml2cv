@@ -7,19 +7,19 @@ import { Suspense, useEffect, useState } from "react";
 import { ErrorProvider, useError } from "./error-provider";
 
 
-export function App({ cvYaml, configYaml, loggedIn, canEdit }) {
+export function App({ cvYaml, configYaml }) {
     return <ErrorProvider>
-            <App_ cvYaml={cvYaml} configYaml={configYaml} loggedIn={loggedIn} canEdit={canEdit} />
+        <App_ cvYaml={cvYaml} configYaml={configYaml} />
     </ErrorProvider>
 }
 
-export function App_({ cvYaml, configYaml, loggedIn, canEdit }) {
+export function App_({ cvYaml, configYaml }) {
     const [yamlContent, setYamlContent] = useState(cvYaml);
     const [resume, setResume] = useState();
     const [loading, setLoading] = useState(true);
 
 
-    const {pushError, clearErrors} = useError()
+    const { pushError, clearErrors } = useError()
 
     useEffect(() => {
         clearErrors('app');
@@ -35,7 +35,7 @@ export function App_({ cvYaml, configYaml, loggedIn, canEdit }) {
             setResume(resumeEvaluated);
         }
         catch (error) {
-            pushError('app',"Incorrect format for YAML, please check");
+            pushError('app', "Incorrect format for YAML, please check");
             console.log(error);
         } finally {
             setLoading(false); // Mark loading as complete
@@ -46,21 +46,18 @@ export function App_({ cvYaml, configYaml, loggedIn, canEdit }) {
         setYamlContent(value);
     };
 
-    if(loading)
-    {
+    if (loading) {
         return <>Loading...</>
     }
 
-    return <AppContainer canEdit={canEdit}>
-            {canEdit ? <EditorWithContainer yamlContent={yamlContent} handleEditorChange={handleEditorChange} /> : <></>}
-            <ResumeWithContainer resume={resume} />
-            {/* <Errors></Errors> */}
+    return <AppContainer>
+        <EditorWithContainer yamlContent={yamlContent} handleEditorChange={handleEditorChange} />
+        <ResumeWithContainer resume={resume} />
     </AppContainer>
 }
 
-
 function Errors() {
-    const { getAllErrors} = useError()
+    const { getAllErrors } = useError()
     const errors = getAllErrors()
     if (!errors || !isArray(errors) || !errors.length) {
         return <></>;
@@ -73,14 +70,9 @@ function Errors() {
 }
 
 function AppContainer({ children, canEdit }) {
-    if (canEdit) {
-        return <div className="flex h-screen overflow-hidden print:contents">
-            {children}
-        </div>
-    }
-    else {
-        return <>{children}</>
-    }
+    return <div className="flex h-screen overflow-hidden print:contents">
+        {children}
+    </div>
 }
 
 
