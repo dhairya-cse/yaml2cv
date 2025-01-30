@@ -1,6 +1,6 @@
 import 'server-only';
 import path from 'path';
-import { readFile, access } from 'fs/promises';
+import { readFile, access, mkdir, copyFile } from 'fs/promises';
 
 export async function loadCvFile(username) {
     return await loadFileContent(path.join(username, 'cv.yaml'));
@@ -20,11 +20,30 @@ export async function loadFileContent(filePath) {
 }
 
 export async function cvFileExists(username) {
-    const fullPath = path.join(process.env.DATA_PATH, path.join(username, 'cv.yaml'));
+    const fullPath = path.join(process.env.DATA_PATH, username, 'cv.yaml');
     try {
         await access(fullPath);
         return true;
     } catch (error) {
         return false;
+    }
+}
+
+export function getLoggedInUser() {
+    //TODO: implement this
+    return process.env.DEFAULT_PROFILE;
+}
+
+export async function createNewCv(username) {
+    const userFolderPath = path.join(process.env.DATA_PATH, username);
+    const defaultCvPath = path.join(process.env.DATA_PATH, 'cv.yaml');
+    const userCvPath = path.join(userFolderPath, 'cv.yaml');
+
+    try {
+        await mkdir(userFolderPath, { recursive: true });
+        await copyFile(defaultCvPath, userCvPath);
+        console.log(`cv.yaml copied to ${userFolderPath}`);
+    } catch (error) {
+        console.error('Error creating CV:', error);
     }
 }
