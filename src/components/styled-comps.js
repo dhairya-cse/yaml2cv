@@ -44,7 +44,7 @@ export function SectionIntroContainer({ children }) {
         return <></>
     }
     return <div className='text-sm print:break-inside-avoid-page'>
-        {children}
+        {parseMarkdown(children)}
     </div>
 }
 
