@@ -1,23 +1,17 @@
+import { App } from '@/components/app'
 import path from 'path';
 import fs from 'fs';
-import { yamlContentToMap, mergeMapsRecursive, isArray } from "@/utils/util";
-import { Resume } from "@/components/cv";
-
 
 export default async function Page({ params }) {
     const profile = (await params).profile;
     const loggedInUser = 'dhairya'
 
+    const loggedIn = !!loggedInUser;
+    const canEdit = profile === loggedInUser;
+    
     let cvYaml = loadFileContent('cv.yaml')
     let defaultConfigYaml = loadFileContent('config.yaml');
-
-    const cvData = yamlContentToMap(cvYaml);
-    const cv = cvData.get('cv');
-    let config = cvData.get('config');
-    const defaultConfig = yamlContentToMap(defaultConfigYaml).get('config');
-    config = mergeMapsRecursive(defaultConfig, config);
-
-    return <Resume cv={cv} config={config}></Resume>
+    return <App cvYaml={cvYaml} configYaml={defaultConfigYaml} loggedIn={loggedIn} canEdit={canEdit}></App>
 }
 
 function loadFileContent(fileName) {
