@@ -10,18 +10,13 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className='font-serif flex justify-center items-center min-h-screen antialiased print:bg-white'>
-        <div class="flex flex-col h-screen">
-          <header class="h-8 bg-blue-600 w-screen text-white flex items-center justify-center shadow-md">
+      <body className='font-serif flex flex-col h-screen justify-center items-center antialiased print:bg-white print:h-full print:contents'>
+          <header className="h-8 bg-blue-600 w-screen text-white flex items-center justify-center shadow-md print:hidden">
             Top Menu Bar
           </header>
-          <main class="flex-1 overflow-y-auto w-screen bg-gray-500">
+          <main className="flex-1 overflow-y-auto w-screen h-full flex justify-center items-center bg-gray-500 print:contents">
               {children}
           </main>
-          <footer class="h-8 bg-gray-100 w-screen text-white flex items-center justify-center shadow-md">
-            Status Bar
-          </footer>
-        </div>
       </body>
     </html>
   );
