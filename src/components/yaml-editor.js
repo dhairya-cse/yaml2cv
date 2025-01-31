@@ -6,7 +6,6 @@ import { EditorView, keymap } from "@codemirror/view";
 import YAML from 'yaml';
 import { useState, useCallback, useEffect } from "react";
 import debounce from "lodash/debounce";
-import { useError } from "./error-provider";
 import { formatDistanceToNow } from "date-fns";
 import { saveFileOnServer } from '@/app/save-file'
 
@@ -14,7 +13,6 @@ import { saveFileOnServer } from '@/app/save-file'
 const AUTOSAVE_DELAY = 5000; // Delay in milliseconds
 
 const YamlEditor = ({ value, onChange }) => {
-  const { pushError, clearErrors, putError } = useError();
   const [lastSavedContent, setLastSavedContent] = useState(value);
   const [lastSavedTime, setLastSavedTime] = useState();
   const [isSaving, setIsSaving] = useState(false);
@@ -28,11 +26,9 @@ const YamlEditor = ({ value, onChange }) => {
         if (res.success) {
           setLastSavedContent(newContent);
           console.info("Saved the file")
-          clearErrors('file-save')
           setLastSavedTime(new Date());
         }
         else {
-          putError('file-save', `File could not be saved: ${res.error}`)
           console.error("File not saved", res.error)
         }
         setIsSaving(false);

@@ -3,14 +3,11 @@
 import { yamlContentToMap, mergeMapsRecursive, isArray } from "@/utils/util";
 import { Resume } from "./cv"
 import YamlEditor from "./yaml-editor"
-import { Suspense, useEffect, useState } from "react";
-import { ErrorProvider, useError } from "./error-provider";
+import { useEffect, useState } from "react";
 
 
 export function App({ cvYaml, configYaml }) {
-    return <ErrorProvider>
-        <App_ cvYaml={cvYaml} configYaml={configYaml} />
-    </ErrorProvider>
+    return <App_ cvYaml={cvYaml} configYaml={configYaml} />
 }
 
 export function App_({ cvYaml, configYaml }) {
@@ -18,11 +15,7 @@ export function App_({ cvYaml, configYaml }) {
     const [resume, setResume] = useState();
     const [loading, setLoading] = useState(true);
 
-
-    const { pushError, clearErrors } = useError()
-
     useEffect(() => {
-        clearErrors('app');
         try {
             const cvData = yamlContentToMap(yamlContent);
             const cv = cvData.get('cv');
@@ -35,7 +28,6 @@ export function App_({ cvYaml, configYaml }) {
             setResume(resumeEvaluated);
         }
         catch (error) {
-            pushError('app', "Incorrect format for YAML, please check");
             console.log(error);
         } finally {
             setLoading(false); // Mark loading as complete
@@ -54,19 +46,6 @@ export function App_({ cvYaml, configYaml }) {
         <EditorWithContainer yamlContent={yamlContent} handleEditorChange={handleEditorChange} />
         <ResumeWithContainer resume={resume} />
     </AppContainer>
-}
-
-function Errors() {
-    const { getAllErrors } = useError()
-    const errors = getAllErrors()
-    if (!errors || !isArray(errors) || !errors.length) {
-        return <></>;
-    }
-
-    return <pre className="fixed bottom-0 text-sm  bg-red-400 text-opacity-10 bg-opacity-10 p-1 w-full">
-        <span className="font-bold">Error:</span>
-        {errors.map((error, index) => <p key={`errors-${index}`}>{error}</p>)}
-    </pre>
 }
 
 function AppContainer({ children, canEdit }) {
