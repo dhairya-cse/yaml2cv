@@ -70,7 +70,7 @@ function Errors() {
 }
 
 function AppContainer({ children, canEdit }) {
-    return <div className="flex h-screen overflow-hidden print:contents">
+    return <div className="flex h-full overflow-hidden print:contents">
         {children}
     </div>
 }
