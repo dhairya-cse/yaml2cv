@@ -120,4 +120,6 @@ The default user for the site can be specified using `${DEFAULT_USER}` environme
 - Only one resume file per user that is stored on the hosted service.
 
 ### Future Work
-- [ ] Authentication for login and allowing to edit files.
+- [ ] Allowing multiple file per user
+- [ ] Improve error handling
+- [ ] Allowing zoom separate zoom control on the resume preview and the yaml editor.
