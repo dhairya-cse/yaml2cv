@@ -1,19 +1,17 @@
 import { yamlContentToMap, mergeMapsRecursive, isArray } from "@/utils/util";
 import { Resume } from "@/components/cv";
-import { loadCvFile, loadConfigFile, cvFileExists, getLoggedInUser } from "@/utils/server-utils";
+import { loadCvFile, loadConfigFile, getCommonFlags } from "@/utils/server-utils";
 import { notFound, redirect } from "next/navigation";
 
 
 export default async function Page({ params }) {
-    const profile = (await params).profile;
+    const { canEdit, cvExists, profile } = await getCommonFlags(params);
 
-    const loggedInUser = getLoggedInUser();
-    const cvExists = await cvFileExists(profile);
     if (!cvExists) {
-        if(loggedInUser === profile) {
+        if (canEdit) {
             return redirect('/edit');
         }
-        
+
         return <>Not Found</>;
     }
 
