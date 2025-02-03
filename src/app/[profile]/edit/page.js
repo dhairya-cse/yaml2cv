@@ -9,6 +9,10 @@ export default async function Page({ params }) {
         redirect('/login');
     }
 
+    if(!cvExists) {
+        return <div>CV Not found</div>
+    }
+
     if (!canEdit) {
         return <div>You are not allowed to edit this <a href={`/${profile}`} className='text-sky-100'>CV</a></div>
     }
