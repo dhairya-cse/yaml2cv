@@ -23,19 +23,25 @@ export async function loadFileContent(filePath) {
 
 export async function cvFileExists(username) {
     const fullPath = path.join(process.env.DATA_PATH, username, 'cv.yaml');
+    console.log("Trying to access", fullPath);
     try {
         await access(fullPath);
         return true;
     } catch (error) {
+        console.log("Trying to access", fullPath, error);
         return false;
     }
 }
 
 export async function getLoggedInUser() {
-    //TODO: implement this
-    const session = await auth();
-    if (session && session.user) {
-        return session.user.preferred_username;
+
+    try {
+        const session = await auth();
+        if (session && session.user) {
+            return session.user.preferred_username;
+        }
+    } catch (error) {
+        console.log("Error getting logged in user", error);
     }
     return null;
 }
@@ -54,19 +60,18 @@ export async function createNewCv(username) {
     }
 }
 
-export async function 
-getProfile(params) {
+export async function
+    getProfile(params) {
     return (await params).profile;
 }
 
-export function getCanEdit(profile, loggedInUser)
-{
+export function getCanEdit(profile, loggedInUser) {
     return profile === loggedInUser;
 }
 
 export async function getCommonFlags(params) {
     const loggedInUser = await getLoggedInUser();
-    const profile =  await getProfile(params)
+    const profile = await getProfile(params)
     return {
         loggedInUser: loggedInUser,
         loggedIn: !!loggedInUser,
