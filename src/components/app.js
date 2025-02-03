@@ -1,16 +1,12 @@
 "use client"
 
-import { yamlContentToMap, mergeMapsRecursive, isArray } from "@/utils/util";
+import { yamlContentToMap, mergeMapsRecursive } from "@/utils/util";
 import { Resume } from "./cv"
 import YamlEditor from "./yaml-editor"
 import { useEffect, useState } from "react";
-
+import { EditorContainer, ResumeAppContainer, AppContainer } from '@/components/styled-comps'
 
 export function App({ cvYaml, configYaml }) {
-    return <App_ cvYaml={cvYaml} configYaml={configYaml} />
-}
-
-export function App_({ cvYaml, configYaml }) {
     const [yamlContent, setYamlContent] = useState(cvYaml);
     const [resume, setResume] = useState();
     const [loading, setLoading] = useState(true);
@@ -43,26 +39,11 @@ export function App_({ cvYaml, configYaml }) {
     }
 
     return <AppContainer>
-        <EditorWithContainer yamlContent={yamlContent} handleEditorChange={handleEditorChange} />
-        <ResumeWithContainer resume={resume} />
+        <EditorContainer>
+            <YamlEditor value={yamlContent} onChange={handleEditorChange} />
+        </EditorContainer>
+        <ResumeAppContainer>
+            {resume}
+        </ResumeAppContainer>
     </AppContainer>
-}
-
-function AppContainer({ children, canEdit }) {
-    return <div className="flex h-full overflow-hidden print:contents">
-        {children}
-    </div>
-}
-
-
-function EditorWithContainer({ yamlContent, handleEditorChange }) {
-    return <div className="flex-1 h-full bg-white border-r-slate-300 border-r-2 border-black print:hidden">
-        <YamlEditor value={yamlContent} onChange={handleEditorChange} />
-    </div>
-}
-
-function ResumeWithContainer({ resume }) {
-    return <div className="h-full overflow-y-auto bg-white print:contents" >
-        {resume}
-    </div>
 }

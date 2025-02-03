@@ -93,9 +93,8 @@ const YamlEditor = ({ value, onChange }) => {
   const yamlLinter = linter((view) => debouncedLinter(view));
 
   return (
-    <div className="content h-full">
-      {value && <p className="bg-slate-200">Last saved: {renderTime(lastSavedTime)}</p>}
-      <div className="content h-full overflow-y-auto">
+    <div className="flex flex-col h-full">
+      <div className="content flex-1 overflow-y-auto">
         <CodeMirror
           value={value}
           minWidth="45rem"
@@ -104,6 +103,7 @@ const YamlEditor = ({ value, onChange }) => {
           theme="light"
         />
       </div>
+      {value && <p className="bg-slate-200">Last saved: {renderTime(lastSavedTime)}</p>}
     </div>
   );
 };

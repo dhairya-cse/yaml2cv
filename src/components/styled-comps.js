@@ -64,6 +64,25 @@ export function ContactsContainer({ children }) {
     return <div className="flex justify-center gap-3 text-sm leading-tight">{children}</div>
 }
 
+export function AppContainer({ children }) {
+    return <div className="flex h-full overflow-hidden print:contents">
+        {children}
+    </div>
+}
+
+
+export function EditorContainer({children}) {
+    return <div className="flex-1 bg-white border-r-slate-300 border-r-2 border-black print:hidden">
+        {children}
+    </div>
+}
+
+export function ResumeAppContainer({ children }) {
+    return <div className="h-full overflow-y-auto bg-white print:contents" >
+        {children}
+    </div>
+}
+
 function getColumnsClass(columns) {
     if (!columns || typeof columns != 'number') {
         return 'columns-1'
