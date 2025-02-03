@@ -2,17 +2,21 @@
 
 ### Introduction
 
-Yaml2cv is personal project that streamlines resume creation using yaml and powerful CSS properties for print media.
+Yaml2cv is personal project that streamlines cv creation using yaml and powerful CSS properties for print media.
+
+![yaml2cv live editing](yaml2cv.png)
 
 ### Purpose and Inspiration
 
-Formatting resume to make it look nicer is a hard and word is a terrible software to do it! 
+Formatting cv to make it look nicer is a hard and word is a terrible software to do it! 
 
-Previously I had a great template in LaTeX where I could use some custom commands to create the resume that is not terrible to look at. While I really loved the pdf generated from this template, I felt using LaTeX is a bit of overkill and it looks a bit clunky.
+Previously I had a great template in LaTeX where I could use some custom commands to create the cv that is not terrible to look at. While I really loved the pdf generated from this template, I felt using LaTeX is a bit of overkill and it looks a bit clunky.
 
 In one of the professional situation, I had to generate PDFs for account statements. I utilised [iText](https://mvnrepository.com/artifact/com.itextpdf/html2pdf) for converting an html page to pdf for the task in hand. It was fun to learn to use CSS to make sure that the pdf looks nice and there aren't any unexpected breaks in paragraphs. 
 
-This inspired me to make a very simple application that utilises the print media related CSS properties to create the resume in pdf format.
+This inspired me to make a very simple application that utilises the print media related CSS properties to create the cv in pdf format.
+
+**Feel this can be useful for you?! Start using it at: [cv.jinsil.me](https://cv.jinsil.me)!**
 
 ### Technology
 
@@ -20,9 +24,9 @@ This project utilises React for reusable components creation and tailwind for st
 
 ### Configurations
 
-There are some default configurations specified by `${YAML2CV_DATA}/config.yaml` file which would be used for every resume file.
+There are some default configurations specified by `./data/config/config.yaml` file which would be used for every cv file.
 
-The configs can also be overridden by defining them in your `resume.yaml` file.
+The configs can also be overridden by defining them in your `cv.yaml` file.
 
 Please look for the comments in the following config file to get an understanding of it.
 
@@ -63,8 +67,10 @@ config:
       bullets_cols: 2
 ```
 
-### Resume file
-The resume file for a user is stored at `${YAML2CV_DATA}/<user-name>/cv.yaml`. 
+### Cv file
+The cv file for a user is stored at `./data/profiles/<profile-name>/cv.yaml`. 
+
+For a new user the file is created from a template defined in `./data/config/default-cv.yaml`
 
 Please look for the comments in the following cv.yaml file to get an understanding of it.
 ```yaml
@@ -109,17 +115,48 @@ cv:
 # Config overrides
 config:
     technical_skills:
-      bullets_cols: 2
+      bullets_cols: 3
 ```
 
 ### Default Profile:
 The default user for the site can be specified using `${DEFAULT_PROFILE}` environment variable. What that means is `http://localhost:3000/` would be redirected to `http://localhost:3000/<DEFAULT_PROFILE>`.
 
+### Self hosting
+
+1. Clone this project and build the container for yaml2cv with docker. (Make sure you have docker installed)
+
+```sh
+docker build -t yaml2cv .
+```
+
+2. Create an OAuth client on your keycloak realm for yaml2cv
+3. Run the container
+```sh
+docker run -p 3000:3000 \\
+-e DEFAULT_PROFILE=dhairya \\
+-e AUTH_KEYCLOAK_ID=<your_keycloak_client_id> \\
+-e AUTH_KEYCLOAK_SECRET=<your_keycloak_client_secret> \\
+-e AUTH_KEYCLOAK_ISSUER=<your_keycloak_realm_issuer_url> \\
+-e AUTH_SECRET=<auth_secret> \\
+yaml2cv:latest
+```
+
+or alternatively, you can provide the environment variables using `--env-file` option. 
+you can also mount a volume to /app/data/profiles for storing the files permanently.
+
+```sh
+docker run -p 3000:3000 --env-file .env -v yaml2cv_profiles_data:/app/data/profiles -d  yaml2cv:latest
+```
+4. Check `http://localhost:3000`.
+
 ### Known limitations
 - Currently there are some issues with the rendering which splits one line half way but only in rare cases. A workaround is to change the font size slightly or try adding some blank spaces for now.
-- Only one resume file per user that is stored on the hosted service.
+- Only one cv file per user that is stored on the hosted service.
+- Only keycloak OAuth is supported and no bypass available for local deployments.
 
-### Future Work
-- [ ] Allowing multiple file per user
-- [ ] Improve error handling
-- [ ] Allowing zoom separate zoom control on the resume preview and the yaml editor.
+### Future Possibilities
+- Allowing multiple file per user
+- Improve error handling
+- Allowing zoom separate zoom control on the cv preview and the yaml editor.
+- File versioning.
+- Responsive UI for smaller screens

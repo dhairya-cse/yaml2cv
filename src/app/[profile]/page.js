@@ -10,7 +10,7 @@ export default async function Page({ params }) {
 
     if (!cvExists) {
         if (canEdit) {
-            return redirect('/edit');
+            return redirect(`${profile}/edit`);
         }
 
         return <>Not Found</>;

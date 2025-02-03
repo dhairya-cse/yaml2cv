@@ -7,14 +7,13 @@ import { getLoggedInUser } from '@/utils/server-utils';
 
 export async function saveFileOnServer({ content }) {
     const profile = await getLoggedInUser();
-    
-    if(!profile) {
+
+    if (!profile) {
         return { success: false, error: "Not authenticated" }
     }
 
     try {
-        const fileName = `cv.yaml`;
-        const filePath = path.join(process.env.DATA_DIR, profile, fileName);
+        const filePath = path.join('./data','profiles', profile, 'cv.yaml');
         await fs.writeFile(filePath, content, "utf8");
         return { success: true }
     } catch (error) {
