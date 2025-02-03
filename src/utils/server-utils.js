@@ -5,30 +5,25 @@ import { log } from 'console';
 import { auth } from '@/auth';
 
 export async function loadCvFile(username) {
-    return await loadFileContent(path.join(username, 'cv.yaml'));
+    return await loadFileContent(path.join('profiles', username, 'cv.yaml'));
 }
 
 export async function loadConfigFile() {
-    return await loadFileContent('config.yaml');
-}
-
-export async function loadDefaultResume() {
-    return await loadFileContent('cv.yaml');
+    return await loadFileContent(path.join('config', 'config.yaml'));
 }
 
 export async function loadFileContent(filePath) {
-    filePath = path.join(process.env.DATA_PATH, filePath);
+    filePath = path.join('./data', filePath);
     return await readFile(filePath, 'utf8');
 }
 
 export async function cvFileExists(username) {
-    const fullPath = path.join(process.env.DATA_PATH, username, 'cv.yaml');
-    console.log("Trying to access", fullPath);
+    const fullPath = path.join('./data', 'profiles', username, 'cv.yaml');
+
     try {
         await access(fullPath);
         return true;
     } catch (error) {
-        console.log("Trying to access", fullPath, error);
         return false;
     }
 }
@@ -47,8 +42,8 @@ export async function getLoggedInUser() {
 }
 
 export async function createNewCv(username) {
-    const userFolderPath = path.join(process.env.DATA_PATH, username);
-    const defaultCvPath = path.join(process.env.DATA_PATH, 'cv.yaml');
+    const userFolderPath = path.join('./data', 'profiles', username);
+    const defaultCvPath = path.join('./data', 'config', 'template-cv.yaml');
     const userCvPath = path.join(userFolderPath, 'cv.yaml');
 
     try {

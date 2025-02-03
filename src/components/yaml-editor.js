@@ -103,7 +103,7 @@ const YamlEditor = ({ value, onChange }) => {
           theme="light"
         />
       </div>
-      {value && <p className="bg-slate-200">Last saved: {renderTime(lastSavedTime)}</p>}
+      {value && <p className="px-2 py-1 bg-slate-200">Last saved: {renderTime(lastSavedTime)}</p>}
     </div>
   );
 };
