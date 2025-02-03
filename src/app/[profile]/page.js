@@ -8,10 +8,6 @@ import { AppContainer, ResumeAppContainer } from "@/components/styled-comps";
 export default async function Page({ params }) {
     const { canEdit, cvExists, profile } = await getCommonFlags(params);
 
-    if (!profile) {
-        return redirect(`/${process.env.DEFAULT_PROFILE}`);
-    }
-
     if (!cvExists) {
         if (canEdit) {
             return redirect(`${profile}/edit`);
