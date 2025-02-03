@@ -4,15 +4,23 @@ import Keycloak from "next-auth/providers/keycloak"
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [Keycloak],
   callbacks: {
-    async jwt({ token, account, user, profile }) {
-      if (profile) {
-        token.preferred_username = profile.preferred_username; // Add preferred_username to token
+    async jwt({ token, account, profile }) {
+      if (account) {
+        token.accessToken = account.access_token; // Store the access token
       }
-      console.log(token, account, user, profile);
+      
+      if (profile && profile.preferred_username) {
+        token.preferred_username = profile.preferred_username;
+      }
+  
       return token;
     },
+  
     async session({ session, token }) {
-      session.user.preferred_username = token.preferred_username; // Pass preferred_username to session
+      if (session?.user && token?.preferred_username) {
+        session.user.preferred_username = token.preferred_username;
+      }
+        
       return session;
     },
   }

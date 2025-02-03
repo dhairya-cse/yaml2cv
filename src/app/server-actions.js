@@ -20,7 +20,6 @@ export async function saveFileOnServer({ userId, content }) {
 
 
 export async function signInAction() {
-    console.log(signIn);
     await signIn("keycloak")
 }
 
