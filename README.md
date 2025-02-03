@@ -132,12 +132,12 @@ docker build -t yaml2cv .
 2. Create an OAuth client on your keycloak realm for yaml2cv
 3. Run the container
 ```sh
-docker run -p 3000:3000 \\
--e DEFAULT_PROFILE=dhairya \\
--e AUTH_KEYCLOAK_ID=<your_keycloak_client_id> \\
--e AUTH_KEYCLOAK_SECRET=<your_keycloak_client_secret> \\
--e AUTH_KEYCLOAK_ISSUER=<your_keycloak_realm_issuer_url> \\
--e AUTH_SECRET=<auth_secret> \\
+docker run -p 3000:3000 \
+-e DEFAULT_PROFILE=dhairya \
+-e AUTH_KEYCLOAK_ID=<your_keycloak_client_id> \
+-e AUTH_KEYCLOAK_SECRET=<your_keycloak_client_secret> \
+-e AUTH_KEYCLOAK_ISSUER=<your_keycloak_realm_issuer_url> \
+-e AUTH_SECRET=<auth_secret> \
 yaml2cv:latest
 ```
 
