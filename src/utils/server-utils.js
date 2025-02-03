@@ -34,8 +34,7 @@ export async function cvFileExists(username) {
 export async function getLoggedInUser() {
     //TODO: implement this
     const session = await auth();
-    if (session) {
-        console.log(session);
+    if (session && session.user) {
         return session.user.preferred_username;
     }
     return null;
