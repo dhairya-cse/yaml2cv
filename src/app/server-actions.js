@@ -1,6 +1,7 @@
 'use server'
 import path from 'path';
 import { promises as fs } from "fs";
+import { signIn, signOut } from "@/auth"
 
 
 export async function saveFileOnServer({ userId, content }) {
@@ -15,4 +16,14 @@ export async function saveFileOnServer({ userId, content }) {
         console.error("Error saving file:", error);
         return { success: false, error: "Server Error" };
     }
+}
+
+
+export async function signInAction() {
+    console.log(signIn);
+    await signIn("keycloak")
+}
+
+export async function signOutAction() {
+    await signOut("keycloak")
 }
