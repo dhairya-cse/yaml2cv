@@ -2,14 +2,19 @@
 import path from 'path';
 import { promises as fs } from "fs";
 import { signIn, signOut } from "@/auth"
+import { getLoggedInUser } from '@/utils/server-utils';
 
 
-export async function saveFileOnServer({ userId, content }) {
+export async function saveFileOnServer({ content }) {
+    const profile = await getLoggedInUser();
+    
+    if(!profile) {
+        return { success: false, error: "Not authenticated" }
+    }
+
     try {
         const fileName = `cv.yaml`;
-        const filePath = path.join(process.cwd(), `/data/${fileName}`);
-        // await fs.mkdir(userDir, { recursive: true });        
-        // const filePath = path.join(userDir, fileName);
+        const filePath = path.join(process.env.DATA_DIR, profile, fileName);
         await fs.writeFile(filePath, content, "utf8");
         return { success: true }
     } catch (error) {
