@@ -6,7 +6,7 @@ export default async function Page({ params }) {
     const { loggedIn, canEdit, cvExists, profile } = await getCommonFlags(params);
 
     if (!loggedIn) {
-        redirect('/login');
+        redirect(`/${profile}`);
     }
 
     if(!cvExists) {

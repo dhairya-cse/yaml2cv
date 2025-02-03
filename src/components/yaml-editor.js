@@ -7,7 +7,7 @@ import YAML from 'yaml';
 import { useState, useCallback, useEffect } from "react";
 import debounce from "lodash/debounce";
 import { formatDistanceToNow } from "date-fns";
-import { saveFileOnServer } from '@/app/save-file'
+import { saveFileOnServer } from '@/app/server-actions'
 
 
 const AUTOSAVE_DELAY = 5000; // Delay in milliseconds

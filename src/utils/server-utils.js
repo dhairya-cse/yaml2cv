@@ -2,6 +2,7 @@ import 'server-only';
 import path from 'path';
 import { readFile, access, mkdir, copyFile } from 'fs/promises';
 import { log } from 'console';
+import { auth } from '@/auth';
 
 export async function loadCvFile(username) {
     return await loadFileContent(path.join(username, 'cv.yaml'));
@@ -30,9 +31,14 @@ export async function cvFileExists(username) {
     }
 }
 
-export function getLoggedInUser() {
+export async function getLoggedInUser() {
     //TODO: implement this
-    return process.env.DEFAULT_PROFILE;
+    const session = await auth();
+    if (session) {
+        console.log(session);
+        return session.user.preferred_username;
+    }
+    return null;
 }
 
 export async function createNewCv(username) {
@@ -60,7 +66,7 @@ export function getCanEdit(profile, loggedInUser)
 }
 
 export async function getCommonFlags(params) {
-    const loggedInUser = getLoggedInUser();
+    const loggedInUser = await getLoggedInUser();
     const profile =  await getProfile(params)
     return {
         loggedInUser: loggedInUser,

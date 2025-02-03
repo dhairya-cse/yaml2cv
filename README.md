@@ -112,8 +112,8 @@ config:
       bullets_cols: 2
 ```
 
-### Default user:
-The default user for the site can be specified using `${DEFAULT_USER}` environment variable. What that means is `http://localhost:3000/` would be redirected to `http://localhost:3000/<DEFAULT_USER>`.
+### Default Profile:
+The default user for the site can be specified using `${DEFAULT_PROFILE}` environment variable. What that means is `http://localhost:3000/` would be redirected to `http://localhost:3000/<DEFAULT_PROFILE>`.
 
 ### Known limitations
 - Currently there are some issues with the rendering which splits one line half way but only in rare cases. A workaround is to change the font size slightly or try adding some blank spaces for now.
