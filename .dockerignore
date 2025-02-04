@@ -23,8 +23,7 @@ logs/
 *.sqlite
 
 # Ignore sensitive data and unnecessary directories
-/data/*
-!.data/config  # If you need to keep specific files
+/data/profiles
 
 # Ignore Git and IDE/editor settings
 .git/
