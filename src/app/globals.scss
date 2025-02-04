@@ -8,6 +8,13 @@ html {
   font-size: 14.6px;
 }
 
+@layer base {
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(113, 63, 18, 0.3) transparent; 
+  }
+}
+
 @media print {
 
   @page {
