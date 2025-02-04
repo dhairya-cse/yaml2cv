@@ -2,7 +2,7 @@
 
 import { ContactsContainer, SectionHeading, ItemList, SubsectionHeader, SubSectionContainer, SectionContainer, ResumeContainer, ResumeTitle, SubsectionIntroContainer, SectionIntroContainer } from "./styled-comps";
 import { ContactEntry } from "./contact-comps"
-import { ensureMap, formatToTitleCase, isArray, isEmpty, isMap, mergeMapsRecursive, replaceWithEnDash } from '../utils/util'
+import { ensureMap, formatToTitleCase, isArray, isEmpty, isMap, mergeMapsRecursive, replaceWithEnDash, mapForEach } from '../utils/util'
 
 export function Resume({ cv, config }) {
 
@@ -27,9 +27,9 @@ function Contacts({ contacts, config }) {
 
     return (
         <ContactsContainer>
-            {Array.from(contacts.entries().map(([contacts_key, contact], index) => (
+            {mapForEach(contacts, ([contacts_key, contact], index) => (
                 <ContactEntry key={contacts_key} contact_type={contacts_key} config={config.get(contacts_key)} value={contact} />
-            )))}
+            ))}
         </ContactsContainer>
     );
 }
@@ -43,9 +43,9 @@ function Sections({ sections, config }) {
     return (
         <>
             {
-                Array.from(sections.entries().map(([section_key, section], index) => (
+                mapForEach(sections, ([section_key, section], index) => (
                     <Section key={section_key} section_key={section_key} section={section} config={config.get(section_key)} />
-                )))
+                ))
             }
         </>
     );
@@ -57,7 +57,7 @@ function Section({ section, section_key, config }) {
         return <></>;
     }
 
-    const columns = config ? config.get('bullets_cols'): 1;
+    const columns = config ? config.get('bullets_cols') : 1;
 
     return (
         <SectionContainer>
@@ -83,9 +83,9 @@ function SubSections({ subsections, section_config }) {
     return (
         <>
             {
-                Array.from(subsections.entries().map(([subsection_key, subsection], index) => (
+                mapForEach(subsections, ([subsection_key, subsection], index) => (
                     <SubSection key={subsection_key} subsection={subsection} config={section_config?.get(subsection_key) || new Map()} section_config={section_config} />
-                )))
+                ))
             }
         </>
     );
@@ -111,7 +111,7 @@ function SubSection({ subsection, config, section_config }) {
 
     return (
         <SubSectionContainer>
-            <SubsectionHeader title={title} subtitle={subtitle} rhsTop={replaceWithEnDash(rhsTop)} rhsBottom={rhsBottom} link={link}/>
+            <SubsectionHeader title={title} subtitle={subtitle} rhsTop={replaceWithEnDash(rhsTop)} rhsBottom={rhsBottom} link={link} />
             <SubsectionIntroContainer>{desc}</SubsectionIntroContainer>
             <ItemList items={bullets} />
         </SubSectionContainer>

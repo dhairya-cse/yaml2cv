@@ -96,3 +96,7 @@ export function isString(obj) {
 export function isArray(obj) {
     return Array.isArray(obj);
 }
+
+export function mapForEach(obj, callback){
+    return Array.from(obj.entries()).map(callback);
+}

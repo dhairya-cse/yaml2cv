@@ -1,4 +1,4 @@
-import { formatToTitleCase, isEmpty, isString, parseMarkdown } from '../utils/util'
+import { formatToTitleCase, isEmpty, isString, mapForEach, parseMarkdown } from '../utils/util'
 
 export function ResumeContainer({ children }) {
     return <div className="w-letter bg-white mx-auto p-4 sm:p-8 print:p-0">
@@ -30,7 +30,7 @@ export function SubsectionHeader({ title, subtitle, rhsTop, rhsBottom, link }) {
 }
 
 export function SubsectionIntroContainer({ children }) {
-    if(!children){
+    if (!children) {
         return <></>;
     }
     return <div className='text-sm'>
@@ -39,8 +39,7 @@ export function SubsectionIntroContainer({ children }) {
 }
 
 export function SectionIntroContainer({ children }) {
-    if(!children)
-    {
+    if (!children) {
         return <></>
     }
     return <div className='text-sm print:break-inside-avoid-page'>
@@ -71,7 +70,7 @@ export function AppContainer({ children }) {
 }
 
 
-export function EditorContainer({children}) {
+export function EditorContainer({ children }) {
     return <div className="flex-1 bg-white border-r-slate-300 border-r-2 border-black print:hidden">
         {children}
     </div>
@@ -116,13 +115,13 @@ export function ItemList({ items, columns, className }) {
     if (items instanceof Map) {
         return <List className={className}>
             {
-                Array.from(items.entries().map(([key, val], index) => {
+                mapForEach(items, ([key, val], index) => {
                     if (!isString(val)) {
                         return <></>
                     }
                     return <ListItem key={index}><span className='font-bold'>{formatToTitleCase(key)}:</span> {parseMarkdown(val)}</ListItem>
                 }
-                ))
+                )
             }
         </List>
     }
