@@ -50,18 +50,20 @@ export function mergeMapsRecursive(defaultConfig, config) {
         return defaultConfig; // If config is null, return defaultConfig as is
     }
 
-    config.forEach((value, key) => {
-        const defaultValue = defaultConfig.get(key);
+    if (!defaultConfig) {
+        return config;
+    }
 
-        if (defaultValue instanceof Map && value instanceof Map) {
-            // If both values are maps, merge them recursively
+    if (!(defaultConfig instanceof Map) && !(config instanceof Map)) {
+        return config;
+    }
+
+    if ((defaultConfig instanceof Map) && (config instanceof Map)) {
+        config.forEach((value, key) => {
+            const defaultValue = defaultConfig.get(key);
             defaultConfig.set(key, mergeMapsRecursive(defaultValue, value));
-        } else {
-            // Otherwise, override or add the value in defaultConfig
-            defaultConfig.set(key, value);
-        }
-    });
-
+        });
+    }
     return defaultConfig; // Merged map
 }
 
@@ -97,6 +99,6 @@ export function isArray(obj) {
     return Array.isArray(obj);
 }
 
-export function mapForEach(obj, callback){
+export function mapForEach(obj, callback) {
     return Array.from(obj.entries()).map(callback);
 }
