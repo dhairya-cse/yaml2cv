@@ -44,7 +44,7 @@ function Sections({ sections, config }) {
         <>
             {
                 mapForEach(sections, ([section_key, section], index) => (
-                    <Section key={section_key} section_key={section_key} section={section} config={config.get(section_key)} />
+                    <Section key={section_key} section_key={section_key} section={section} config={config?.get(section_key)} />
                 ))
             }
         </>
