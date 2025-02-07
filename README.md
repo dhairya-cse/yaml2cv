@@ -118,7 +118,7 @@ config:
       bullets_cols: 3
 ```
 
-### Default Profile:
+### Default Profile:
 The default user for the site can be specified using `${DEFAULT_PROFILE}` environment variable. What that means is `http://localhost:3000/` would be redirected to `http://localhost:3000/<DEFAULT_PROFILE>`.
 
 ### Self hosting
@@ -149,7 +149,7 @@ docker run -p 3000:3000 --env-file .env -v yaml2cv_profiles_data:/app/data/profi
 ```
 4. Check `http://localhost:3000`.
 
-### Known limitations
+### Known limitations
 - Currently there are some issues with the rendering which splits one line half way but only in rare cases. A workaround is to change the font size slightly or try adding some blank spaces for now.
 - Only one cv file per user that is stored on the hosted service.
 - Only keycloak OAuth is supported and no bypass available for local deployments.
