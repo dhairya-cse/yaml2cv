@@ -2,13 +2,18 @@
 
 import { ContactsContainer, SectionHeading, ItemList, SubsectionHeader, SubSectionContainer, SectionContainer, ResumeContainer, ResumeTitle, SubsectionIntroContainer, SectionIntroContainer } from "./styled-comps";
 import { ContactEntry } from "./contact-comps"
-import { ensureMap, formatToTitleCase, isArray, isEmpty, isMap, mergeMapsRecursive, replaceWithEnDash, mapForEach } from '../utils/util'
+import { formatToTitleCase, isEmpty, isMap, mergeMapsRecursive, replaceWithEnDash, mapForEach } from '../utils/util'
+import { useEffect } from "react";
 
 export function Resume({ cv, config }) {
 
     if (isEmpty(cv) || !isMap(cv)) {
         return <ResumeContainer></ResumeContainer>
     }
+    
+    useEffect(() => {
+        document.title = cv.get('name');
+    }, []);
 
     return (
         <ResumeContainer>
