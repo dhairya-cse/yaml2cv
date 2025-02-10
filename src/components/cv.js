@@ -57,7 +57,7 @@ function Section({ section, section_key, config }) {
         return <></>;
     }
 
-    const columns = config ? config.get('bullets_cols') : 1;
+    const columns = isMap(config) ? config.get('bullets_cols') ?? 1 : 1;
 
     return (
         <SectionContainer>
@@ -119,7 +119,7 @@ function SubSection({ subsection, config, section_config }) {
 }
 
 function getFieldMap(config) {
-    return config ? (config.get('field-map') || new Map()) : new Map();
+    return isMap(config) ? (config.get('field-map') || new Map()) : new Map();
 }
 
 function getBulletsFromSubsection(subsection, field_map) {
