@@ -3,7 +3,8 @@
         "https://json.schemastore.org/yamllint.json": [
             "file:///Users/dhairya/Documents/personal/resume/public/dhairya_resume.yaml",
             "file:///Users/dhairya/Documents/personal/resume/public/dhairya.yml",
-            "file:///Users/dhairya/Documents/personal/resume/data/cv.yaml"
+            "file:///Users/dhairya/Documents/personal/resume/data/cv.yaml",
+            "file:///Users/dhairya/Documents/personal/yaml2cv/data/profiles/dhairya/cv.yaml"
         ]
     }
 }

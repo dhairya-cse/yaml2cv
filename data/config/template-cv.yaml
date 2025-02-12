@@ -13,12 +13,12 @@ cv:
       title: "Professional Experience"
       subsections:
         alba:
-          company: "AlbaCo Ltds."
+          company: "AlbaCo Ltd."
           position: "Software Engineer"
           location: "London, UK"
           duration: "May 2023 – Current"
           responsibilities:
-            - "Contributing to authorisation journey of Alba with foundational technological development."
+            - "Contributing to **authorisation** journey of Alba with foundational technological development."
             - "Collaborated with cross-functional teams to understand requirements and developed backend services for deposits origination and operations portal using a microservices architecture, ensuring robustness with unit tests."
             - "Integrated **Mambu** for core banking and **RiskNarrative (LexisNexis)** APIs for KYC workflows."
             - "Designed and developed an in-house Task Approval system for operations portal with extensible architecture to support evolving business use cases."
@@ -56,7 +56,7 @@ cv:
         cloud: "Microsoft Azure, GCP, AWS"
         tools: "Git, Docker, Nginx"
         databases: "MySQL, MongoDB, Redis, SQL"
-        others: "NumPy, SciPy, WebAssembly (WASM), Microsoft Power Platform"
+        others: "NumPy, SciPy, WebAssembly (WASM), Microsoft Power Platform, LangChain"
 
     education:
       subsections:
@@ -79,11 +79,12 @@ cv:
     projects:
       subsections:
         jinsil:
-          link: https://ink.jinsil.me
+          link: "https://ink.jinsil.me"
           name: "Jinsil: Personal Projects and Self-Hosting"
           description:
             - "Hosted [*Bhariavi*](https://bhariavi.jinsil.me) and my personal blog [*ink.jinsil.me*](https://ink.jinsil.me) using Docker Compose and Caddy web server."
             - "Self-hosted [*postal mail server*](https://postal.jinsil.me/) for sending emails with no-reply@jinsil.me email ID, and [*Keycloak*](https://auth.jinsil.me/) for identity and access management."
+            - "Developed and hosted [*yaml2cv*](https://github.com/dhairya-cse/yaml2cv), a web app that simplifies CV creation using YAML, featuring live editing and real-time preview."
             - "Configured Keycloak as an OpenID Connect provider to enable Single Sign-On (SSO) across supported services."
             - "**Tech Stack**: Docker, Docker Compose, Ubuntu 24.10, Caddy, Keycloak, Postal, Next.js, Cloudflare"
 
@@ -120,5 +121,18 @@ cv:
       bullets:
         - "Secured All India Rank **116 among 99,932** candidates in **GATE 2019.**"
         - "**Mentored** students as Teaching Assistant and received Star TA award."
-        - "Exploring Large Language Models (LLMs) to develop conversational interfaces for fintech applications."
+        - "[*Exploring*](https://github.com/dhairya-cse/wall-e-t) Large Language Models (LLMs) to develop conversational interfaces for fintech applications, check [*Wall-e-t*](https://github.com/dhairya-cse/wall-e-t)"
         - "Personal interests: Computational Art, music."
+    links:
+      bullets:
+        - "[*Wall-e-t repo*](https://github.com/dhairya-cse/wall-e-t)"
+        - "[*Bhairavi: bhairavi.jinsil.me*](https://bhairavi.jinsil.me/)"
+        - "[*yaml2cv: cv.jinsil.me*](https://cv.jinsil.me)"
+        - "[*Blog: ink.jinsil.me*](https://ink.jinsil.me/)"
+        - "[*Bhairavi repo*](https://github.com/dhairya-cse/bhairavi)"
+        - "[*yaml2cv repo*](https://github.com/dhairya-cse/yaml2cv)"
+
+config:
+  sections:
+    links:
+      bullets_cols: 3

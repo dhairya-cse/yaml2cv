@@ -7,7 +7,7 @@ export function ResumeContainer({ children }) {
 }
 
 export function SectionHeading({ heading }) {
-    return <div className="section text-lg font-bold text-navy border-b border-navy border-opacity-35 mb-0 pb-0 print:break-after-avoid-page">{heading}</div>
+    return <header className='print:break-after-avoid-page'><h2 className="text-lg font-bold text-navy border-b border-navy border-opacity-35 mb-0 pb-0 print:break-after-avoid-page">{heading}</h2></header>
 }
 
 export function SectionContainer({ children }) {
@@ -17,34 +17,34 @@ export function SectionContainer({ children }) {
 }
 
 export function SubSectionContainer({ children }) {
-    return <div className='mb-1'>{children}</div>
+    return <article className='mb-1'>{children}</article>
 }
 
 export function SubsectionHeader({ title, subtitle, rhsTop, rhsBottom, link }) {
-    return <div className="grid grid-cols-1 sm:grid-cols-[auto,auto] w-auto leading-tight break-inside-avoid-page break-after-avoid-page">
-        <div className="font-bold"><a href={link}>{title}</a></div>
-        <div className="sm:font-bold sm:text-right text-sm">{rhsTop}</div>
-        <div className="text-sm"><em>{subtitle}</em></div>
-        <div className="text-sm sm:text-right"><em>{rhsBottom}</em></div>
-    </div>
+    return <header className="grid grid-cols-1 sm:grid-cols-[auto,auto] w-auto leading-tight break-inside-avoid-page break-after-avoid-page">
+        <h3 className="font-bold"><a href={link}>{title}</a></h3>
+        <p className="sm:font-bold sm:text-right text-sm">{rhsTop}</p>
+        <p className="text-sm"><em>{subtitle}</em></p>
+        <p className="text-sm sm:text-right"><em>{rhsBottom}</em></p>
+    </header>
 }
 
 export function SubsectionIntroContainer({ children }) {
     if (!children) {
         return <></>;
     }
-    return <div className='text-sm'>
+    return <p className='text-sm'>
         {children}
-    </div>
+    </p>
 }
 
 export function SectionIntroContainer({ children }) {
     if (!children) {
         return <></>
     }
-    return <div className='text-sm print:break-inside-avoid-page'>
+    return <p className='text-sm print:break-inside-avoid-page'>
         {parseMarkdown(children)}
-    </div>
+    </p>
 }
 
 export function List({ children, className }) {
@@ -60,7 +60,7 @@ export function ResumeTitle({ title }) {
 }
 
 export function ContactsContainer({ children }) {
-    return <div className="flex justify-center gap-3 text-sm leading-tight">{children}</div>
+    return <p className="flex justify-center gap-3 text-sm leading-tight">{children}</p>
 }
 
 export function AppContainer({ children }) {

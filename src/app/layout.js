@@ -11,12 +11,12 @@ export default function Layout({ children, header }) {
   return (
     <html lang="en">
       <body className='font-serif flex flex-col h-screen justify-center items-center antialiased print:bg-white print:h-full print:contents'>
-        <header className="h-8 p-2 bg-blue-50 font-thin text-yellow-900 w-screen gap-8 leading-tight flex items-center justify-center shadow-md print:hidden">
+        <div className="h-8 p-2 bg-blue-50 font-thin text-yellow-900 w-screen gap-8 leading-tight flex items-center justify-center shadow-md print:hidden">
           {header}
-        </header>
-        <main className="min-h-0 flex-1 w-screen bg-gray-500 grid place-items-center items-center justify-center print:contents">
+        </div>
+        <div className="min-h-0 flex-1 w-screen bg-gray-500 grid place-items-center items-center justify-center print:contents">
           {children}
-        </main>
+        </div>
       </body>
     </html>
   );

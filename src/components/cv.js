@@ -10,16 +10,20 @@ export function Resume({ cv, config }) {
     if (isEmpty(cv) || !isMap(cv)) {
         return <ResumeContainer></ResumeContainer>
     }
-    
+
     useEffect(() => {
         document.title = cv.get('name');
     }, []);
 
     return (
         <ResumeContainer>
-            <ResumeTitle title={cv.get('name')} />
-            <Contacts contacts={cv.get('contacts')} config={config.get('contacts')} />
-            <Sections sections={cv.get('sections')} config={config.get('sections')} />
+            <header>
+                <ResumeTitle title={cv.get('name')} />
+                <Contacts contacts={cv.get('contacts')} config={config.get('contacts')} />
+            </header>
+            <main>
+                <Sections sections={cv.get('sections')} config={config.get('sections')} />
+            </main>
         </ResumeContainer>
     );
 }
