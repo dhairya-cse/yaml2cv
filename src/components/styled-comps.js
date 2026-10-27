@@ -48,7 +48,7 @@ export function SectionIntroContainer({ children }) {
 }
 
 export function List({ children, className }) {
-    return <ul className={`list-no-break text-sm list-disc ml-8 leading-snug ${className ?? ''}`}>{children}</ul>;
+    return <ul className={`list-no-break text-sm ml-8 leading-snug ${className ?? ''}`}>&bull; {children}</ul>;
 }
 
 export function ListItem({ children }) {
