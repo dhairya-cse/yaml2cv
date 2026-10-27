@@ -48,11 +48,40 @@ export function SectionIntroContainer({ children }) {
 }
 
 export function List({ children, className }) {
-    return <ul className={`list-no-break text-sm ml-3 leading-snug ${className ?? ''}`}>{children}</ul>;
+    const handleCopy = (event) => {
+    const selection = window.getSelection();
+    if (!selection || selection.isCollapsed) return;
+
+    const range = selection.getRangeAt(0);
+    const container = document.createElement('div');
+    container.appendChild(range.cloneContents());
+
+    // Target every single list item inside the highlighted selection
+    const listItems = container.querySelectorAll('li');
+
+    if (listItems.length > 0) {
+      const textLines = [];
+
+      listItems.forEach((li) => {
+        // Prepend the bullet point and trim any stray whitespace
+        textLines.push(`• ${li.innerText.trim()}`);
+      });
+
+      // Join each formatted bullet line together with a distinct newline character
+      const customTextOutput = textLines.join('\n');
+
+      // Inject into clipboard and override default selection behavior
+      event.clipboardData.setData('text/plain', customTextOutput);
+      event.preventDefault();
+    }
+  };
+
+
+    return <ul onCopy={handleCopy} className={`list-no-break text-sm ml-8 list-disc leading-snug ${className ?? ''}`}>{children}</ul>;
 }
 
 export function ListItem({ children }) {
-    return <li className='pr-3 break-inside-avoid-page'><span className={`mr-3`}>&bull;</span>{children}</li>;
+    return <li className='pr-3 break-inside-avoid-page'>{children}</li>;
 }
 
 export function ResumeTitle({ title }) {
