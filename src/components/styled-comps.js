@@ -48,11 +48,11 @@ export function SectionIntroContainer({ children }) {
 }
 
 export function List({ children, className }) {
-    return <ul className={`list-no-break text-sm ml-8 leading-snug ${className ?? ''}`}>&bull; {children}</ul>;
+    return <ul className={`list-no-break text-sm ml-3 leading-snug ${className ?? ''}`}>{children}</ul>;
 }
 
 export function ListItem({ children }) {
-    return <li className='pr-3 break-inside-avoid-page'>{children}</li>;
+    return <li className='pr-3 break-inside-avoid-page'><span className={`mr-3`}>&bull;</span>{children}</li>;
 }
 
 export function ResumeTitle({ title }) {
