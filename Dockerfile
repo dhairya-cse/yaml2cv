@@ -1,11 +1,11 @@
-FROM node:23.6.0-alpine AS deps
+FROM node:lts-alpine AS deps
 
 WORKDIR /app
 
 COPY package.json package-lock.json ./
 RUN npm install
 
-FROM node:23.6.0-alpine AS builder
+FROM node:lts-alpine AS builder
 
 WORKDIR /app
 
@@ -15,7 +15,7 @@ COPY . .
 
 RUN npm run build
 
-FROM node:23.6.0-alpine AS runner
+FROM node:lts-alpine AS runner
 
 WORKDIR /app
 
